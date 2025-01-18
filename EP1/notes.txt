@@ -1,0 +1,231 @@
+Emmet generate some code for you 
+html:5 generates an emmet template for HTML 
+
+This is the basic way to write hello world on a web page 
+
+
+  <div id = "root">
+    <h1>Hello world</h1>
+  </div>
+
+  <!-- But if we want to write heading using javascript we can do this -->
+
+  <script>
+
+    const heading = document.createElement("h1");// For creating an element 
+    heading.innerHTML = "Hello world from javascript";// For adding content inside that element 
+
+    const root = document.getElementById("root");// This will return a reference of an element according to ID 
+
+    root.appendChild(heading);// Inserting child inside parent container 
+
+  </script>
+
+what are these document.createElement ? or getElementById
+
+These are the API which browser already has. browser has js engine which is used to execute js 
+
+Does the browser know what is react ? ->No
+
+browser do not understand react code and neither our project is configured to use react right now. 
+So first we will do is, get react into our project
+
+1-> write cdn react on browser
+
+cdn(content delivery network)-> this is the website where react library has been hosted and we are pulling react from there 
+
+          "Hosted" in development means where your application or website is deployed and made accessible to users, typically on a server or cloud platform. It ensures your project is live and accessible via the internet.
+
+          Types:
+          Web Hosting: Deployed on a web server (e.g., shared, VPS, or cloud hosting).
+          Cloud Hosting: Hosted on platforms like AWS or Azure for scalability.
+          Self-hosted: Managed on your own servers.
+          Managed Hosting: A provider handles hosting and maintenance.
+          Online Development Environments: Tools like GitHub Codespaces for coding directly online.
+          Hosting impacts performance, scalability, and accessibility.
+        
+    
+            A library in programming is a collection of pre-written code, functions, or routines that developers can use to perform common tasks without writing the code from scratch. Libraries help save time and effort by providing reusable components.
+
+ 
+ 
+  <!-- 3rd segment -->
+
+  <!-- comment the wholejs above  and copy paste the cdn links just above the end of body tag -->
+
+
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+Now we have injected react in our project and our browser will now understand react 
+
+This is the first wayy and normal way of importing react in our project
+
+These are script tags used to include the React and ReactDOM libraries in a project directly via a Content Delivery Network (CDN). They allow you to use React for building user interfaces without needing to install it through a package manager like npm or bundlers like Webpack.
+
+Explanation of Each Part:
+<script> Tag:
+
+Loads the specified JavaScript file into your HTML.
+
+crossorigin Attribute:
+
+Enables the browser to handle Cross-Origin Resource Sharing (CORS) for the script.
+Required when loading resources from a different origin to allow them to work securely.
+src Attribute:
+
+Specifies the URL of the script to be loaded.
+React Library (react.development.js):
+
+Core React library for defining components, managing state, and building the UI.
+This is the development version, which includes helpful debugging tools and warnings.
+For production, you’d use a minified version (react.production.min.js) to improve performance.
+
+ReactDOM Library (react-dom.development.js):
+
+Handles rendering React components to the DOM.
+Provides methods like ReactDOM.render() to attach React components to the HTML structure.
+Why Use These?
+Direct Access: Quickly test or prototype React applications without setting up a development environment.
+Ease of Use: No need for tools like npm, Babel, or Webpack—just add the script tags and start coding.
+Usage:
+html
+Copy
+Edit
+<div id="root"></div>
+<script>
+  const root = ReactDOM.createRoot(document.getElementById('root'));
+  root.render(<h1>Hello, React!</h1>);
+</script>
+This approach is mostly for learning or quick prototyping. For larger applications, a proper build setup is recommended.
+
+If you will open the link there is a random big code which is react code (plain js code )react at the end of the day is javascript library , react is built using javascript
+which is making our life easier 
+
+This code is written by faceboook developers
+
+
+Now if your will write react in console of browser 
+then we will able to see alot of functions and tools which is given by react to us 
+
+Now we have injected react in our project by using cdn links  
+
+ReactDOM is a react library with we can do to DOM operations
+
+
+
+WHy there are 2 files cant that be in a single file 
+
+react doesn;t only work on browser, it works on mobile phone as react native so there are different functionalities for different platoform 
+
+When we have injected these cdn links in our proj now we can use the super powers that react has given to us 
+
+
+<!-- 4th segment : Now we will try to understand how to write heading using react--> 
+
+<script>
+  const heading  = React.createElement("h1",{},"")
+</script>
+
+FIrst arg takes what tag we want to create , second is an object which is the place where u will give Attributes for your tag 
+and 3 is  what we want to put inside that tag 
+
+And after then we have to tell react where is the root where we have to render the things or where it can do its dom manipulation 
+
+creating an element is the core the things which we can do from first lib
+
+but creating a root and rendering the things inside it is a job of ReactDOM
+
+What is the most costly operation inside browser or webpage ?
+
+Ans : when u do something, when your web page is interactive, or when the DOM nodes needs to be manipulated
+
+when u click a button which is in your webpage and somehting is happening on that page. why 
+
+Dom tree is getting change , putting some nodes inside the dom and remove some nodes from the DOM this is the costly operation
+All the framework and libraries trying to optimize this 
+React is one of them 
+
+React also comes with a philosphy whenever u need to do anything on the web page do it using javascript and that is why react gives u these helper function to make things work in a very performant way 
+
+
+
+
+
+// If u want to create this type of structure 
+
+{/* <div id = "parent">
+  <div id = "child">
+  <h1>"Hello Aarush"</h1>
+  </div>
+</div> */}
+
+const parent = React.createElement("div",{id: "parent"},
+  React.createElement("div",{id: "child"},
+  React.createElement("h1",{id: "children"},"Hello aarush")));
+
+  // This is how we create nested HTML structure inside react application
+
+  console.log(parent);
+  
+const root = ReactDOM.createRoot(document.getElementById("root"));
+
+root.render(parent);// We 
+
+ReactElement(object) converts into  HTML(Browser understands)
+
+
+render function is converting that obj into HTML and then that is rendered inside DOM 
+If u want to add one more children inside content in above structure then put the childrens
+inside array 
+
+
+
+
+const parent = React.createElement("div",{id: "parent"},
+  React.createElement("div",{id: "child"},
+  [React.createElement("h1",{},"Hello children1"),
+  React.createElement("h2",{},"Hello children2")
+  ]));
+
+  // This is how we create nested HTML structure inside react application
+
+  console.log(parent);
+  
+const root = ReactDOM.createRoot(document.getElementById("root"));
+
+root.render(parent);// We 
+
+If u want to make a more compilicates structure then u can do this by 
+
+
+const parent = React.createElement("div",{id: "parent"},[
+  React.createElement("div",{id: "child1"},
+  [React.createElement("h1",{},"Hello children1"),
+  React.createElement("h2",{},"Hello children2")
+  ]),
+  React.createElement("div",{id: "chil2"},
+  [React.createElement("h1",{},"Hello children1"),
+  React.createElement("h2",{},"Hello children2")
+  ])
+  ]);
+
+
+  // If we try to change the sequence of all the script tags inside index.html it will throw error 
+
+  so add the library always above if u are using logic of react below it 
+
+  what if there is already some content inside our main root then what will happen? 
+
+  then the content will be replaced by the reactobject. For somemilsec the content will be there and after some time it will be appended.
+
+  U can do this if u want to check that ur main object is rendered inside root 
+
+  js executes line by line so it will start from top of html first will display main root content then add core react lib in our project then react dom library in our proj and then then app.js which will replace the content of root with parent object
+
+
+React is only working inside div id root.
+If we will add the content below and above the div tag then that content will be displayed  
+
+
+React is a library It can be applied to a small portion of a page itself. In header or in footer or in button . React only work in the place where u make your root as  and also sequence of files matters alot  
