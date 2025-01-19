@@ -1,0 +1,277 @@
+till now we have written html, css, js and readme but is this code ready to push to production 
+whats issue ?
+
+The code is not optimized. It has alot of comments and we dont want to push these into our production code
+We want to minify our code. We want to bundle our code means if our proj has 1000 files i want to bundle those files. I want to compress those files .I want to minify those files. Suppose our app has alot of images i have to optimize those images 
+
+To make your app ready to go into production u need to alot of processing in your local or before you push the code into production
+
+You meed to do bundling
+= === ======== code splitting
+ ============= chunking
+                image optimization
+                remove the comments
+                minify the code , compress it and alot of things before you can make your code go to production
+
+ There is command which will make our app already ignite ->> 
+npx create-react-app my-app
+cd my-app
+npm start
+
+or npm create vite@latest 
+
+
+but Here we will learn how to ignites our app from scratch  
+
+If u want to make a fast production ready app can react itself do it ??? No ,, It is but to an extent 
+
+
+There are alot of other packages that are required to make our production ready app. Alot of other libraries that somebody else has written to make our code fast ,scalable and production ready 
+
+NPM:
+
+npm is everything but not node package manager. It doesnot have a full form . Npm manages packages but it doesnot stand for node package manager
+
+it is a standard repo for all the packages . Any package u want to include in your project . U can use NPM . All the packages are hosted over there. All the libraries,utilities comes from NPM and npm manages that for us in our project . When we create a 
+create-react-app (a scaffold) it automattically has a npm inside it . We dont have to configure it. 
+
+Let make our project use NPM for that do ->>  npm init 
+It will create package.json which is a configuration for our NPM 
+package are also known as dependencies. Our project is dependendent on alot of packages or dependencies. And npm manages that.
+Npm manages what is the version of that package which we are using.Npm will take care of it in package.json
+
+The most imp package in our proj is a bundler.when we have html,css,js file our whole code needs to be bundled together ,minified,cached,compress,clean before it need to be sent to production and bundler help in all these things 
+
+vite,webpack,parcel are all bundlers 
+
+bundler packages your app so that it can be shipped to production. That create react app begind the scenes is using webpack bundler and bable to build things up . we have chosen parcel . the algorithm or way to bundle the things can be differnet but they are doing the same thing .
+
+parcel is easy to configure and we will learn how to ignite our app with this bundler parcel
+
+parcel will ingite our app . First try to get parcel in to our app thorugh npm 
+
+npm install parcel
+
+we will install parcel as a dev dependency-> npm install -D parcel
+
+There are two types of dependencies a app can have one is 
+-> dev dependencies-> when we are in development phase then we required development dependencies
+-> normal dependencies-> these are used in prod also 
+
+all the minfication, chunking etc will be done in dev phase not in prod phase 
+
+we tell npm that i want parcel in our app but as a dev dependency but not a normal dependencies which is on prod
+
+package.json keeps a track of all the packages our proj is using 
+
+"devDependencies": {
+    "parcel": "^2.13.3"
+  }
+
+  ^-> this is caret 
+  ~ -> tilda 
+  if a minor upgrade comes and u have put caret (^) parcel will automattically updates the version
+  if u have put tilda it will update major version automattically 
+
+  Always it is safe to upgrade to minor version rather then major version because alot of things can break into our app 
+
+  we have another file package-lock-json which comes on installing parcel 
+
+  whats diff b/w package-lock-json and package.json
+
+  package-lock.json keeps a track of exact version of all packages installed in app
+  and package.josn can have approch version of package
+
+  there is a integrity which makes sure whatever version there is in local machine packages should be same in the productiong 
+
+  Node modules contains all the code which we fetched from NPM.if u will see there alot of folders which is fetched from npm we have fethced only parcel but there are other packages also which are installed but why our project has a dependency parcel and parcel as a projcet have their own dependencies and those dependencies can have their own dependencies . Parcel cant do alot of things on its own . parcel needs help of alot of other packages thats why when we install parcel . parcel says to npm pls install these packages also 
+
+  node modules is like a database. it contains the actual data for all the dependencies that our proj needs  
+
+  who npm knows what are the dependencies of parcel because of package.json 
+
+
+How many package.json we have in out whole project ? 
+
+Every package have their own package.json which contains differnt packages which is known as transitive dependency 
+  
+
+Node modules is containing allthe packages that our project needs. SHould i push this node modules to github or production 
+
+The answer is no 
+why? -> The best practice is put node modules in gitignore . If u want some files to not go onto production. Put it inside gitignore.
+
+
+But we have to push package.json and package-lock(used to maintain exact version of all the transitive dependencies that our project will need ) to production or git
+
+as but json maintains or keep track of all the dependencies that our project needs 
+
+If i have my package.json and package-lock.json. I can regenerate my node modules u just have to do npm install 
+
+whatever u can regenerate dont put on git 
+
+We will now build our app using parcel 
+
+write command on terminal : npx parcel sourcefile(index.html)
+
+parcel has created a server for us which is running at  http://localhost:1234
+
+it rook 11.04 sec to built it 
+
+Our app is now hosted on the server
+
+when we do npm it means we are installing the package 
+
+npx means executing the package 
+
+npx (package name)
+
+parcel goes to source html and build a development build for our app and it host that development build to local host 1234
+
+WE have injected react into our project by using cdn links which is one way 
+
+
+Another way is by using npm to get react into our app means react is hosted on npm 
+
+CDN links is not a preferred way to bring react and REactDOm in our project 
+
+
+why 
+
+we are making a network call to bring react in our project but what if react is already inside my node modules then we dont have to make a network call 
+
+1-> Another way is what if i have node modules then we dont have to make network call everytime 
+
+2-> If other version of react comes tommorow then we have to keep changing the url so it better to have it inside package.json so that package will be automattically updated 
+
+
+we will install react as a normal dependency
+ so do npm install react 
+ not npm install -D react 
+
+ u can also do npm i react
+
+ and other package we use is npm install react-dom 
+
+ now when we will run npx parcel index.html 
+ it will error react is not defined 
+
+ why 
+
+ because right now we just have installed react in our project which is in node modules we have to import it in app.js 
+ files dont know where the react keyword is coming from 
+
+ so we have to do it by using keyword 
+
+ import 
+
+ There will be other error browser script cant have import 
+
+ means it is treating it as normal js file and normal js file cant have import thats why we need to tell browser that this file is not a normal js file . Its a module. 
+
+ 
+<script type = "module"src="./App.js"></script>
+
+Now above file be considerd as a module 
+
+we have to import other package 
+import ReactDOM from "react-dom/client";
+
+
+When u will change something in app.js it will get automattically reloded on to server . This is done by parcel 
+
+
+#Parcel : 
+-  It is creating a Dev build for U
+- IT create a local server for u or host our app on to server 
+- It is refreshing our page as well . It does HTR(Hot module replacement ) in all the files . IT is reading all the files . Andhow it is doing that . Parcel uses a file watching algorithm written in C++ . It keeps an eye on all the files as soon as we change anything o on our code. parcel keep a track of every save  that we do in our  proj . As soon as we save it will build once again but the time will be reduced everytime on every build why?
+
+parcel is caching things for us. If gives us faster build or faster development experience because it is doing caching 
+
+When we build our project . Parcel quickly snaked in to our project and also took some space which are in parcel-cache  so that next build can be developed faster 
+
+parcel will also do image optimization
+
+The most expensive thing in your web browser is to load images into your page and  
+
+If we will build production build then it will do minification of our file as well  
+
+IT will also compress all the files so that size can be small so that we can ship the smaller version to production
+
+React is not only make our app fast but there are so many things which bundler is doing to make it fast and parcel is not doing it alone. It is also taking the help of other libraries 
+
+parcel uses something known as consistent hashing.
+
+It do code splitting for you 
+
+Do differntial bundling for our app so that our app can run smoothly on older version of browser as well 
+
+parcel also gives a beautiful error display view 
+
+right now our app is hosted over http. It gives a way to host our app over https 
+
+It do tree shaking: If there is 1000 functions in your code. ANd your are using only some functions. So it will remove unused code 
+
+It createa differnt dev and prod bundles 
+prod bundle is optmized but takes more time 
+and opposite in dev buiuld 
+
+when we write 
+npx parcel build index.html will give error
+
+In package.json there is main which tells this is the entry point of our app 
+
+but we have alradey mention while writing command entry point so remove main in package.json 
+
+
+
+so right now our project is hosted on a server and that is coming from dist folder 
+
+when we do npx parcel index.html it generates a dev build and hosted on to server and that is saved in dist folder  
+
+and when we update file it used parcel-cache and dist to do refreshing using HMR 
+
+Jabh hmm prod build krenge to dist will be created again and there will be just 3 files 
+css,html and js file. If our app has 10 files then that will be minified or compressed into these 3 files
+
+these 3 files are the prod ready code for our app which is higly optimized which we can now push to the production and server to the users 
+
+parcel-cache,dist and node_modules can be automattically generated so we dont have to push it to github because i have sufficient information to regenerate it 
+
+
+PRACTICAL : 
+
+
+local -> code we put this code to github repo 
+
+and this code is deployed on to the server.
+Does our code directly connect to server 
+
+server fetches this code and server will host the app to end user and the command that we used like npx parcel build etc thses command server will also run  . We will only push package.json to git and server will fetch that json and run npm install on the server  so it server will also be having node modules but it will be different from local node modules  
+
+By this we have made a prod ready app 
+
+For making our app compatible for older version of the browsers .
+
+WE will use browserlist package which is in node modules and we have to tell browserlist what all browser we have to support for my app 
+should our app to be supported in 
+
+and we will configure it in package.json 
+
+
+'browserslist' : [
+  "last 2 Chrome version",
+  "last 2 Firefox version"
+]
+
+our app is now compatible for latest last 2 chrome version. also u can see browserlist.dev for setting version 
+
+when we support many version . then parcel have to create differnet bundles for supporting diff browsers. 
+why need to do that 
+
+but for govt websites u can do for every version 
+
+u can also set cover 99.5% in US 
+u can give country specic code 
+
+Now by doing everything till now we have created our own createReact app 
