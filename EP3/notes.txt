@@ -1,0 +1,131 @@
+npx parcel index.html
+
+above will create a development build for us and host it to localhost 1234
+
+npx means we are executing a npm package parcel and given a source file as index.html 
+
+for prod build the command will be 
+
+npx parcel build index.html
+
+instead of writing this again and again we write script then we will not use npx parcel index.html 
+we will can use diff script
+one for build
+one for prod 
+
+we have created a script start which will run our project in development mode and another script build for run our project in production mode
+If you are working in a company 
+If u dont know how to run the code then just go to package.json and look for script . You will get the exact command to run the code 
+
+add this in package.json 
+"scripts": {
+    "start" : "parcel index.html",
+    "build" : "parcel build index.html",
+    "test": "jest"
+  },
+
+
+  do run npm run start 
+
+  by this the script will be called which parcel index.html 
+
+  u can also do npm start but it works onlyu for start 
+
+   what is a react element 
+
+  suppose in our browser i want to see a h1 tag with heading 
+
+  const heading = React.createElement("h1",{id : "heading"},"Namaste Aarush");
+
+   react element is a html element ? No 
+
+   but it will create an js object and when we render this element to dom it becomes HTML 
+
+  for render we have to create a root inside react 
+
+  const root = ReactDOM.createRoot(document.getElementById("root"));
+
+  root.render(heading);
+
+  root.render will convert this object into HTML and push it to the browser . Push means it will replace actual content of div with react element 
+
+  its very complex to write react element in this way , the syntax is not good 
+
+  to help developers facebook community developed something known as JSX
+
+jsx is a js syntax to create react element 
+
+jsx is not a part of react. we can make any application without jsx also . But it makes developers life easy
+
+jsx is a convention where we marge HTML and js together. 
+
+How can we create a h1 tag using jsx 
+
+const jsxHeading = <h1>namaste react using jsx </h1>
+
+jsx is not html inside js 
+
+jsx is a html like syntax 
+
+when above piece of code is executed it becomes react element 
+
+initially we have created a h1 tag inside react but now we have create a h1 tag inside jsx
+
+ const heading = React.createElement("h1",{id : "heading"},"Namaste Aarush");
+
+
+above code is equal to below code 
+
+
+const jsxHeading = <h1 id = "heading">Namaste Aarush </h1>
+
+if u will do console.log(jsxHeading) then it will also a same js object like heading 
+
+root.render(jsxHeading);
+
+This is not pure js
+js doesnot comes with jsx built inside it 
+
+
+Your js engine doesnt understand jsx 
+
+js engine only understand ecmascript 
+
+so it will give error because browser cant understand jsx  
+
+then how this below code is executed 
+const jsxHeading = <h1 id = "heading">Namaste Aarush </h1>
+
+
+parcel is doing its job behind the scenes
+
+this code is transpiled before going to the js engine and js engine receives a code that browser can understand 
+
+transpiled means the code is converted into a code that browser can understamd 
+
+It is done by parcel but not alone .This responsibility is given to -> Babel is doing this 
+
+babels job is to convert jsx code into react code 
+
+const jsxHeading = <h1 id = "heading">Namaste Aarush </h1>
+
+above code first jsx -> reactElement-> js object-> HTML element 
+
+
+older browser cant understand modern es6 so 
+bablel also convert es6 code to a code that older browser can understand 
+
+babel is imp package after parcel 
+
+if u want to give className then u can give it is as 
+
+const jsxHeading = <h1 className = "head"> Namaste react</h1>
+
+className will be changed to class during rendering 
+
+if u want to give attributes to jsx we use camelCase and we dont use , 
+
+If we want to write jsx in multiple lines then wrap it inside curly braces (<h1 className = "head"> 
+Namaste react
+</h1>)
+

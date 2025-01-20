@@ -1,0 +1,27 @@
+.inContain {
+  display: flex;
+  justify-content: space-between;
+  border: 2px solid black;
+}
+
+/* <div className="inContain">
+        <img src="image.png"></img>
+        <input type="text" placeholder="search"></input>
+        <div id="userIcon">
+          A
+        </div>
+      </div> */
+
+.inContain > img {
+  width: 30px;
+  height: 30px;
+}
+#userIcon {
+  display: flex;
+  justify-content: center;
+  width: 25px;
+  height: 25px;
+  border-radius: 7px;
+
+  background-color: aquamarine;
+}
