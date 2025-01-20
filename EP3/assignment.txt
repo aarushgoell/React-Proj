@@ -1,0 +1,113 @@
+Topics
+1. JSX
+What is JSX?
+JSX (JavaScript XML) allows us to write HTML-like syntax in JavaScript, making the code more readable and expressive when working with UI components in React.
+Example:
+jsx
+Copy
+Edit
+const element = <h1>Hello, World!</h1>;
+Behind the scenes, this is converted into React.createElement calls.
+2. React.createElement vs JSX
+React.createElement is the low-level method for creating React elements. It takes three arguments:
+
+The type of element (e.g., 'div', 'h1', or a component).
+Props for the element.
+Children of the element.
+Example:
+jsx
+Copy
+Edit
+const element = React.createElement('h1', { className: 'title' }, 'Hello, World!');
+JSX simplifies the syntax by allowing developers to write HTML-like code.
+Example:
+
+jsx
+Copy
+Edit
+const element = <h1 className="title">Hello, World!</h1>;
+3. Benefits of JSX
+Readability: Looks similar to HTML, making it intuitive.
+Easier Debugging: Errors in JSX point to specific lines.
+Declarative Syntax: Makes it clear what the UI should look like.
+Prevents Injection Attacks: JSX escapes expressions to prevent XSS attacks.
+4. Behind the Scenes of JSX
+JSX is not directly understood by the browser. It gets transpiled into React.createElement calls using tools like Babel.
+Example:
+jsx
+Copy
+Edit
+const element = <h1>Hello, World!</h1>;
+// Transpiles to:
+const element = React.createElement('h1', null, 'Hello, World!');
+5. Babel and Parcel's Role in JSX
+Babel:
+Converts JSX syntax into JavaScript that browsers can understand.
+
+Converts ES6+ syntax into backward-compatible JavaScript.
+Converts JSX into React.createElement.
+Parcel:
+A bundler that simplifies handling dependencies, file transformations (e.g., CSS, JS), and optimizations for deployment. It integrates with Babel to handle JSX during the build process.
+
+6. Components
+Reusable building blocks for UI in React.
+Two types: Functional Components and Class Components.
+7. Functional Components
+Functions that return JSX.
+Example:
+jsx
+Copy
+Edit
+const Title = () => <h1>Hello, Functional Component!</h1>;
+8. Composing Components
+Combining multiple components to create complex UIs.
+Example:
+jsx
+Copy
+Edit
+const Header = () => <h1>Header</h1>;
+const Footer = () => <footer>Footer</footer>;
+const Page = () => (
+  <div>
+    <Header />
+    <Footer />
+  </div>
+);
+Theory
+What is JSX?
+JSX stands for JavaScript XML.
+It’s a syntactic sugar over React.createElement that allows writing HTML-like syntax in JavaScript.
+Superpowers of JSX
+Embeds JavaScript expressions inside curly braces {}.
+Maps attributes like className and htmlFor directly to DOM properties.
+Escapes expressions to prevent XSS attacks.
+Role of the type Attribute in Script Tags
+Specifies the type of the script being used.
+Options:
+"text/javascript": Default type for JavaScript.
+"module": Indicates an ES6 module script.
+{TitleComponent} vs {<TitleComponent/>} vs {<TitleComponent></TitleComponent>}
+{TitleComponent}: Refers to the variable itself (a function or a class).
+Example:
+
+jsx
+Copy
+Edit
+const TitleComponent = () => <h1>Title</h1>;
+const element = <div>{TitleComponent}</div>; // Shows [Function: TitleComponent]
+{<TitleComponent/>}: Invokes the component and embeds its rendered output.
+Example:
+
+jsx
+Copy
+Edit
+const TitleComponent = () => <h1>Title</h1>;
+const element = <div>{<TitleComponent />}</div>; // Renders: <h1>Title</h1>
+{<TitleComponent></TitleComponent>}: Same as {<TitleComponent/>} but used when children are passed to the component.
+Example:
+
+jsx
+Copy
+Edit
+const TitleComponent = (props) => <h1>{props.children}</h1>;
+const element = <TitleComponent>Custom Title</TitleComponent>; // Renders: <h1>Custom Ti
