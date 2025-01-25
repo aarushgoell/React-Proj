@@ -1,0 +1,150 @@
+1. Various Ways to Add Images into an App
+You can add images in your app using several methods. Here are the most common ones:
+
+a. Importing Images
+You can import the image file and use it like a variable.
+
+jsx
+Copy
+Edit
+import React from "react";
+import myImage from "./assets/myImage.jpg";
+
+const App = () => {
+  return <img src={myImage} alt="Example" />;
+};
+
+export default App;
+b. Using Public Folder
+Place the image in the public folder and refer to it with an absolute path.
+
+jsx
+Copy
+Edit
+import React from "react";
+
+const App = () => {
+  return <img src="/myImage.jpg" alt="Example" />;
+};
+
+export default App;
+c. Using URLs (External Images)
+You can directly use image URLs hosted on the internet.
+
+jsx
+Copy
+Edit
+import React from "react";
+
+const App = () => {
+  return <img src="https://example.com/image.jpg" alt="Example" />;
+};
+
+export default App;
+d. Inline Styles for Background Images
+
+jsx
+Copy
+Edit
+import React from "react";
+
+const App = () => {
+  const style = {
+    backgroundImage: "url('/myImage.jpg')",
+    width: "300px",
+    height: "300px",
+    backgroundSize: "cover",
+  };
+
+  return <div style={style}></div>;
+};
+
+export default App;
+2. What Would Happen if We Do console.log(useState())?
+Behavior:
+If you call useState() directly (without destructuring or providing an initial value), React will throw an error:
+vbnet
+Copy
+Edit
+Uncaught Error: Invalid hook call.
+This happens because React Hooks must only be called inside a functional component or a custom hook, and useState() requires an initial state.
+3. How Will useEffect Behave if We Don't Add a Dependency Array?
+If you don’t add a dependency array, the useEffect runs after every render (on every state or prop change).
+Example:
+jsx
+Copy
+Edit
+import React, { useState, useEffect } from "react";
+
+const App = () => {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    console.log("useEffect runs after every render!");
+  });
+
+  return (
+    <div>
+      <button onClick={() => setCount(count + 1)}>Increase</button>
+      <p>Count: {count}</p>
+    </div>
+  );
+};
+
+export default App;
+Output:
+
+Clicking the button will trigger console.log after every re-render.
+4. What is SPA?
+SPA (Single Page Application) is a web application that loads a single HTML file and dynamically updates the content as the user interacts with it, without reloading the page.
+Example:
+
+Frameworks like React and Angular are designed for building SPAs.
+When you navigate to a new route in an SPA, only the necessary content is fetched and updated in the DOM, improving speed and user experience.
+5. Difference Between Client-Side Routing and Server-Side Routing
+Aspect	Client-Side Routing	Server-Side Routing
+Definition	Routing is handled on the browser using JavaScript.	Routing is handled on the server, loading a new page.
+Page Reload	No page reload, only specific parts of the app update.	Full page reload for every navigation.
+Performance	Faster navigation after the initial load.	Slower because the server processes each request.
+SEO	Requires extra setup for SEO (e.g., SSR).	Good SEO by default as full HTML is served.
+Example	React Router, Vue Router.	Traditional PHP or JSP-based websites.
+Client-Side Routing Example (React):
+
+jsx
+Copy
+Edit
+import React from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+
+const Home = () => <h1>Home Page</h1>;
+const About = () => <h1>About Page</h1>;
+
+const App = () => {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+      </Routes>
+    </Router>
+  );
+};
+
+export default App;
+Server-Side Routing Example (Node.js):
+
+js
+Copy
+Edit
+const express = require("express");
+const app = express();
+
+app.get("/", (req, res) => {
+  res.send("<h1>Home Page</h1>");
+});
+
+app.get("/about", (req, res) => {
+  res.send("<h1>About Page</h1>");
+});
+
+app.listen(3000, () => console.log("Server running on port 3000"));

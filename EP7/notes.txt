@@ -1,0 +1,437 @@
+We are going to create different pages onto different URL. if URL is localhost1234/about
+
+so it will take us to about page. If we have / contact it will take us contact page. If it is restro then it will take us to a restro page.
+
+For building this functionality we will be using important javascript library. We will be using a routing library 
+
+Some imp thing about useEffect hook. How is useEffect hook called
+
+first argumnet is call back function and second argumnet is dependency array and lets us also see when is this useEffect called 
+
+useEffect is called after every render of the component 
+
+dependency array changes the behaviour of the rendor but its not mandatory 
+
+==========================
+
+if no dependency array => useEffect is called on every render  and just once 
+
+What is there was an Empty dependency array 
+
+then after first render useEffect is called and then it will not be called. Cout is getting inceased but useEffect is not getting called again and again 
+
+What if we put something inside dependency array then it will only be called if the dependency changes 
+
+the basic nature of useEffectis to be called after every render but if we pass a empty dependency array then it will just be called once.
+
+What if we put something inside the dependency array then it will only be called when the dependency changes 
+
+if i passed btnNameReact as a dependency
+
+useEffect(()=>{
+  console.log("useEffect called");
+}.[btnNameReact]);
+
+so whenver this btnNameReact state changes then useEffect will be called.
+
+useEffect will always be called on initial render 
+
+Example:
+
+import { useEffect, useState } from "react";
+
+const LoginLogout = () => {
+  const [change, unchange] = useState("login");
+  useEffect(() => {
+    console.log("useffect rendered");
+  }, [change]);
+  return (
+    <button
+      onClick={() => {
+        change == "login" ? unchange("logout") : unchange("login");
+      }}
+    >
+      {change}
+    </button>
+  );
+};
+
+export default LoginLogout;
+
+Never create state variables outside of the component 
+
+useState : used to create local state variables inside your component and
+try to use the hooks when the function starts as js is a single threaded language 
+
+executes line by line
+
+never create state variables inside if else 
+
+if(){
+  const [var,setvar] = useState();
+}
+
+Now we will see we will create routing for our application 
+
+I will be using npm javascript library  whose name is react-router-dom
+
+lets create a route or lets create a about us page  when i will enter URL : 
+
+localhost:1234/about 
+It will take us to about us page 
+
+whenever u want to create routes u have to do routing configuration 
+
+For doing that we will go in root level compoent which is APP. js. Over there we have to create routing configuration and for that we will import a createBrowserRouter from "react-router-dom"
+
+
+createBrowserRouter will create a routing configuration for us 
+
+we are creating a routing configuration for our app router 
+
+configuration means what will happen on a specific route . 
+
+createBrowserRouter([]) -> contains a list of path of the object 
+
+
+const appRouter = createBrowserRouter([
+  {
+    path : "/",
+    element : <AppLayout />,
+  },
+  {
+    path : "/about",
+    element : <About/>
+  }
+
+]);
+
+Page is a composition of components 
+
+We have now created our composition.
+
+We have to now provide this configuration to render on to the screen 
+
+Steps: How did i create my configuration
+
+I import createBrowserRouter from react-router-dom
+
+and this createBrowserRouter takes some config and this config is a list of objects.
+
+Each and every object defines a different path and what should happen on that path 
+
+means if am on path -> "/" then load Apploayout or if i am on '/about' then load about component 
+
+
+We have to now provide this configuration to render on to the screen 
+
+I can import a component from react-router-doom 
+
+React-router-Dom gives this functionality by giving us a component which is RouterProvider  
+
+Router Provider will provide this configuration to our app 
+
+Earlier we are rendering the applayout directly 
+
+but now through router provider we will pass configuration in it and it will be rendered 
+
+This is the full page for setting the configuration and provide that configuration to react 
+
+import React from "react";
+import ReactDOM from "react-dom/client";
+
+import Header from "./components/Header";
+import Body from "./components/Body";
+import { About } from "./components/About";
+
+import {createBrowserRouter,RouterProvider} from "react-router-dom";
+
+// https://www.swiggy.com/dapi/restaurants/list/v5?lat=30.7498676&lng=76.64110939999999&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING
+
+// PJXR+WCX, Guru Teg Bahadur Nagar, Kharar, Punjab 140301, India
+
+
+const AppLayout = () => {
+  return (
+    <div className="app">
+      <Header></Header>
+      <Body></Body>
+    </div>
+  );
+};
+
+
+const appRouter = createBrowserRouter([
+  {
+    path : "/",
+    element : <AppLayout />,
+  },
+  {
+    path : "/about",
+    element : <About/>
+  },  
+]);
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+
+root.render(<RouterProvider router={appRouter}/>);
+
+
+We can make a error element means if user enters incorrect URl then error page will be shown 
+
+
+const appRouter = createBrowserRouter([
+  {
+    path: "/",
+    element: <AppLayout />,
+    errorElement: <ErrorComp />,
+  },
+  {
+    path: "/about",
+    element: <About />,
+  },
+  {
+    path: "/Contact",
+    element: <Contact />,
+  },
+]);
+
+
+And it will work on every incorrect path
+
+
+React router DOM gives us an access to imp hook which is useRouteError
+
+which can be used to display a better message of our error 
+
+import { useRouteError } from "react-router";
+
+export const ErrorComp = () => {
+  const err = useRouteError();
+
+  // It will give us all the errors in our path. react router will catch and pass it onto a object
+
+  console.log(err);
+
+  return (
+    <div>
+      <h1>There is an error</h1>
+      <h1>Input is not found</h1>
+    </div>
+  );
+};
+
+
+This error is a object and contains all the details for our error 
+
+
+ErrorResponseImpl {status: 404, statusText: 'Not Found', internal: true, data: 'Error: No route matches URL "/dsfsfdfds"', error: Error: No route matches URL "/dsfsfdfds"
+    at getInternalRouterError (http://localhost:1234/index…}
+data
+: 
+"Error: No route matches URL \"/dsfsfdfds\""
+error
+: 
+Error: No route matches URL "/dsfsfdfds" at getInternalRouterError (http://localhost:1234/index.7271efb6.js:26271:61) at createRouter (http://localhost:123
+
+We can more info about this error through useRouteError
+
+
+
+One thng to make sure that this we are using react-douter-dom 6 version and latest is 7 
+
+We have downgraded because router are not working 
+
+
+=====================================
+
+I want that header should always be on the top of my application while navigation to different routes 
+
+or want my pages to change below my header for this functionality i have to create children routes 
+
+On my root route , I am creating a children . About and contact is now become children for applayout
+
+const appRouter = createBrowserRouter([
+  {
+    path: "/",
+    element: <AppLayout />,
+    children :[
+      {
+        path: "/",
+        element: <Body />,
+      },
+      {
+        path: "/about",
+        element: <About />,
+      },
+      {
+        path: "/Contact",
+        element: <Contact />,
+      },
+    ],
+    errorElement: <ErrorComp />,
+  }
+  
+]);
+
+And now i want to render my children in AppLayout accordingly 
+so we want to apply condition 
+
+like this 
+const AppLayout = () => {
+  return (
+    <div className="app">
+      <Header></Header>
+
+      {/* if path is / */}
+      <Body></Body>
+      {/* if  path is /about */}
+      <About></About>
+      {/* if path is /contact */}
+      <Contact></Contact>
+
+    </div>
+  );
+};
+
+I want to push my children accordig to the route 
+
+AppLayout has 3 children and i want to push these children according to the path 
+
+And how to push ? 
+thorugh react router dom it gives us compoent (Outlet)
+
+Whenever there is a change in path this outlet will be filled with the children according to the path 
+
+
+const AppLayout = () => {
+  return (
+    <div className="app">
+      <Header></Header>
+      <Outlet />
+    </div>
+  );
+};
+
+Now if i go to route /about then Outlet will be relaced with about compoent 
+Header if fixed but childrens are varies according to different route 
+
+==============================
+
+Now we will do linking. If i click on contact us i will take to contact us page 
+
+One way is u can create a acnhor tag and just link it 
+
+like this 
+<ul>
+          <a href="/about"> <li>Home</li></a>  
+
+  whenever you are using react and you want to route to some other page
+  never use a anchor tag 
+  because the whole page will be refreshed 
+
+  You can navigate to the new page without reloding the whole page 
+
+  There is a Link component which is given to us by react router dom 
+
+  Link component works exactly the same as anchor tag 
+
+   <li>
+            <Link to="/about">About us</Link>
+          </li>
+
+When we naviagte through link compoent that specific component is refreshed now reloded 
+
+Thats why its known as single page application
+
+
+Header is fixed and all the component are interchanging themselves. Everything is a component in react
+
+when i go to new page then its just refreshing the component not reloding the whole page 
+
+but previously when we click on about us or any other page the whole page is loaded once again. website again relod 
+
+But with react, with single page application you dont change the page
+
+There are two types of routing that u can have in your application.
+
+client side routing
+server side routing 
+
+
+In server side routing, If i click on the acnhor tag . It relods the whole page. It sends a network call to aboutus.html and fetches that HTML (aboutus.html is coming from the server)and renders it 
+
+
+In client side routing we are not making any network call when we are moving to any page because all the components are already loaded into our app 
+when we load the app for the first time. It already has the code for about us and when we go to about us page. it just load that component 
+
+
+
+why it is a singe page application:
+because it is a one page. Just the components are interchanged 
+
+Now we are going to make different pages for different restro 
+
+If i will click on meghana foods then it will take me to meghana foods page and load the data of kannur food point 
+
+Now i want to show you . How we can do dynamic routing.
+
+How we can create different routes for different restro 
+
+We have a dynamic route for every restro that we have 
+
+And on that we will be having menu of the specific restro that we click 
+
+First we will create a restro page and load it on some route 
+
+
+
+We are going to reuse the restromenu compoent for every restro. But the content will be dynamic for every restro 
+
+If the restro have 3 wave coffee then 3 wave coffee is writte inside it. If it have meghana foods then meghana foods is writte inside it
+
+Now we have to load this component on a specific route 
+That route can be /restro/id 
+which uniquely identifies that restro 
+
+ 
+        path: "/restaurants/(|)",
+                             |
+                             |
+                             > This  path should be differnet for different restro 
+
+
+How i can tell it as a dynamic path 
+by colon(:)(name)
+
+path : "/restaurants/:resId"
+'
+
+resId is dynamic , It can be changed according to the iD of the restro.
+Every restro has a id that uniquely identifies it 
+
+If i entereed localhost:1234/restro/3324
+
+this 3324 is a dynamic id that change accordig to restro 
+
+
+
+when the restromenu loads make an API call 
+
+Now we are going to pass this res id in side my RestroMenu Component 
+
+by using hook useParams 
+
+ const [resInfo, setResinfo] = useState([]);
+
+  const {resId} = useParams(); 
+
+  useParams() is an object which will give you resId
+
+key should be on the parent jsx in which it is mapped 
+
+Link is a component which is given to us by react router dom 
+
+And behind the scene link is using anchor tag 
+
+Link is a rapper over anchor tag 
