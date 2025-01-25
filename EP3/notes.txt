@@ -129,3 +129,175 @@ If we want to write jsx in multiple lines then wrap it inside curly braces (<h1 
 Namaste react
 </h1>)
 
+
+
+React component 
+
+Everything is a component in react. IF u will see a webpage button, header is a component. A footer,card ,heading ,input box ,searchbar, everything is a component . If there is a list of card thats is also a component 
+
+There are two types of components 
+
+classBased Components- old way of writing components 
+Functional Components- new way 
+
+class Based components using js classes 
+functional compoents using js function create functional components 
+
+
+// React functional component
+
+react functional component is just a normal js function
+
+whenever u are creating a functional Component or any react component name with a capital letter other wise it will give error 
+
+It is a react way to undertand it is a functional component 
+
+react functional component is a normal js function which return some jsx code 
+
+const HeadingComponent  = ()=>{
+  return (
+    <h1>namaste react using functional component</h1>
+  )
+}
+
+const root = createRoot(document.getElementById("root"));
+
+root.render(<HeadingComponent/>);
+
+functional  component -> function which return a react element -> object-> HTML element 
+
+
+If there is only one line in your arrow function then
+
+const HeadingComponent  = ()=> <h1>namaste react using functional component</h1>
+
+
+const HeadingComponent  = ()=>{
+  return (
+    <h1>namaste react using functional component</h1>
+  )
+}
+
+const HeadingComponent  = ()=>(
+    <h1>namaste react using functional component</h1>
+  )
+
+
+All 3 above are same 
+
+
+root.render(HeadingComponent); //-> This is wrong this is not react element . THis is a functional component and all the components are rendered like this below 
+root.render(<HeadingComponent/>)
+
+console.log(<HeadingComponent/>)// same object like react element
+
+
+
+//
+
+U can also do like this 
+
+
+const Title = ()=>{
+  return (
+    <h1>This is the title</h1>
+  )
+} 
+
+const HeadingComponent  = ()=>{
+  return (
+    <div>
+      <Title></Title>
+      <h1>namaste react using functional component</h1>
+    </div>
+  )
+}
+
+const root = createRoot(document.getElementById("root"));
+
+root.render(<HeadingComponent/>);
+
+Writing component like this -> <HeadingComponent/>
+
+or like -> <HeadingComponent></HeadingComponent>
+
+Both are same 
+
+Above code is also known as component composition -> when a component is inside another component
+
+we can also use like components like 
+
+
+
+const HeadingComponent  = function(){
+  return (
+    <div>
+      <Title></Title>
+      <h1>namaste react using functional component</h1>
+    </div>
+  )
+}
+
+Inside jsx u can write javascript 
+but inside curly braces {}
+
+like 
+
+const HeadingComponent  = function(){
+  return (
+    <div> 
+    <h1>{1+1}</h1>
+      <Title></Title>
+      <h1>namaste react using functional component</h1>
+    </div>
+  )
+}
+
+If u want to write react element inside component then just write element inside this {}
+
+as react element is just variable and to write js we use {}
+
+->
+
+const HeadingComponent  = function(){
+  return (
+    <div> 
+    {Reactelement}
+     <Title></Title>
+      <h1>namaste react using functional component</h1>
+    </div>
+  )
+}
+
+
+suppose the data is coming from APi and APi sends some malicious data and we directly injected that data inside jsx 
+
+jsx takes care of injection attacks . jsx will escape it . Jsx will not blindly run it . It will sanitize it .It will present cross site scripting 
+
+U can write multiple components inside components 
+
+
+const HeadingComponent  = function(){
+  return (
+    <div> 
+
+      {Title()}
+     <Title/>
+     <Title></Title>
+     <Title></Title>
+     <Title></Title>
+     <Title></Title>
+     <Title></Title>
+     <Title></Title>
+      <h1>namaste react using functional component</h1>
+    </div>
+  )
+}
+
+These 3 things are same for writing components
+ {Title()} -> inside jsx 
+     <Title/>
+     <Title></Title>
+
+
+Our code is readable because of JSX 

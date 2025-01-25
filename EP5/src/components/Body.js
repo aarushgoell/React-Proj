@@ -10,8 +10,7 @@ const Body = () => {
     <div className="body">
       <button
         onClick={function () {
-          const filteredList = allres;
-          const finalist = filteredList?.filter((res) => {
+          const finalist = newlist?.filter((res) => {
             return res.info.avgRating >= 4;
           });
           setnewlist(finalist);

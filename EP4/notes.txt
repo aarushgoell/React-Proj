@@ -1,131 +1,96 @@
-npx parcel index.html
+First for building an app you have to do is your planning 
 
-above will create a development build for us and host it to localhost 1234
+How our app should look like
 
-npx means we are executing a npm package parcel and given a source file as index.html 
+We will be having header and inside it we will be having logo in left and in right side there will be some links Home about cart 
 
-for prod build the command will be 
+body
 
-npx parcel build index.html
+  search button 
 
-instead of writing this again and again we write script then we will not use npx parcel index.html 
-we will can use diff script
-one for build
-one for prod 
-
-we have created a script start which will run our project in development mode and another script build for run our project in production mode
-If you are working in a company 
-If u dont know how to run the code then just go to package.json and look for script . You will get the exact command to run the code 
-
-add this in package.json 
-"scripts": {
-    "start" : "parcel index.html",
-    "build" : "parcel build index.html",
-    "test": "jest"
-  },
+  Restrocard -> image ,title, star rating 
 
 
-  do run npm run start 
-
-  by this the script will be called which parcel index.html 
-
-  u can also do npm start but it works onlyu for start 
-
-   what is a react element 
-
-  suppose in our browser i want to see a h1 tag with heading 
-
-  const heading = React.createElement("h1",{id : "heading"},"Namaste Aarush");
-
-   react element is a html element ? No 
-
-   but it will create an js object and when we render this element to dom it becomes HTML 
-
-  for render we have to create a root inside react 
-
-  const root = ReactDOM.createRoot(document.getElementById("root"));
-
-  root.render(heading);
-
-  root.render will convert this object into HTML and push it to the browser . Push means it will replace actual content of div with react element 
-
-  its very complex to write react element in this way , the syntax is not good 
-
-  to help developers facebook community developed something known as JSX
-
-jsx is a js syntax to create react element 
-
-jsx is not a part of react. we can make any application without jsx also . But it makes developers life easy
-
-jsx is a convention where we marge HTML and js together. 
-
-How can we create a h1 tag using jsx 
-
-const jsxHeading = <h1>namaste react using jsx </h1>
-
-jsx is not html inside js 
-
-jsx is a html like syntax 
-
-when above piece of code is executed it becomes react element 
-
-initially we have created a h1 tag inside react but now we have create a h1 tag inside jsx
-
- const heading = React.createElement("h1",{id : "heading"},"Namaste Aarush");
+in footer there will be links  
 
 
-above code is equal to below code 
+Now we will decide what will be the components in our application 
+
+There will be main App component in which our application will be and our app will be divided into 3 pieces , header,body and footer
 
 
-const jsxHeading = <h1 id = "heading">Namaste Aarush </h1>
-
-if u will do console.log(jsxHeading) then it will also a same js object like heading 
-
-root.render(jsxHeading);
-
-This is not pure js
-js doesnot comes with jsx built inside it 
-
-
-Your js engine doesnt understand jsx 
-
-js engine only understand ecmascript 
-
-so it will give error because browser cant understand jsx  
-
-then how this below code is executed 
-const jsxHeading = <h1 id = "heading">Namaste Aarush </h1>
+Header 
+ - Logo 
+ - Nav items 
+Body 
+ - Search component 
+ - RestaurantContainer
+    - Restrocard
+     - image
+     - Name of the res,rating,cuisines,
+Footer 
+ - Copyright
+ - Links
+ - Address
+ - Contact 
 
 
-parcel is doing its job behind the scenes
+we will first create App component which will be our top level component where all our app component reside 
 
-this code is transpiled before going to the js engine and js engine receives a code that browser can understand 
+Whenever we are repeating code then we make a seperate component for it like in restrocard  
+so we will make a restrocard component
 
-transpiled means the code is converted into a code that browser can understamd 
+For inline styling component inside jsx
 
-It is done by parcel but not alone .This responsibility is given to -> Babel is doing this 
+we do 
+ style = {{
+  backgroundColor : "yellow" 
+ }}
+ style takes js object inside curly braces to run js 
 
-babels job is to convert jsx code into react code 
-
-const jsxHeading = <h1 id = "heading">Namaste Aarush </h1>
-
-above code first jsx -> reactElement-> js object-> HTML element 
+ How we can make the card dynamic means if the first restro card is KFC then the second restro card will be other 
 
 
-older browser cant understand modern es6 so 
-bablel also convert es6 code to a code that older browser can understand 
+ Props :-> suppose i want to dynamically pass data to some component. We can pass it as a prop to a component 
 
-babel is imp package after parcel 
+ Props are just normal arguments to a function.
 
-if u want to give className then u can give it is as 
+passing a prop to a component as just as passing a argument to a function 
 
-const jsxHeading = <h1 className = "head"> Namaste react</h1>
+ <RestaurantCard resname = "KFC" rating = "3.4" />
+        <RestaurantCard resname = "mangal" rating = "4.2" />
 
-className will be changed to class during rendering 
+    as u can see above we are passing props to a component props means properties 
 
-if u want to give attributes to jsx we use camelCase and we dont use , 
+    and this prop will wrap inside object named as props 
 
-If we want to write jsx in multiple lines then wrap it inside curly braces (<h1 className = "head"> 
-Namaste react
-</h1>)
 
+whenever u want to pass dynamic data to a component u pass it as a prop 
+
+
+How will data come from backend to us -> in the form of json 
+
+Install the plugin json viewer so that u can see JSon in good format 
+
+config Driven UI : when u open a swiggy u see a screen grab a 50 percent of free delivery 
+The offers are available me in different state 
+if there is there someother offers in kolkate, or in delhi the cards will be different. The dishes will be different and it can happen that there will be no offers in some other place. There will be no courousel. We will not make differnet application for every state.
+OUr website is driven by Data . This is known as config driven UI.
+
+Controlling Your UI based on the Data, using config and that config comes from backend 
+ALL the UI will be driven by config 
+
+If i want to change the color of UI for different state then i will set color in backend which will drive our UI
+
+There is a UI layer and data layer . Both of them makes a frontend work 
+
+
+Each child in the list should have a unique key property means each of the list item should be uniquely represented 
+
+But why we need key? 
+
+react optimizes its render cycle . When there are components at same level. These component should have unqiue id. Suppose if a new restro came in and there is no id then react will rerender all the restro cards. React doesnot know at what place we have to put that restro card.So react will remove all the cards and then re-reder all the cards on to DOM becaue react doesnt know which is the new card which is added. It will treat all the restro card as same.
+
+If we have put the ID to all the cards. Then react will know that all the prev cards are old and react dont have to render them. So react will only render the new card 
+
+React itself says never use index as keys becaue it is a bad practice but if the id is not given then u can use index 

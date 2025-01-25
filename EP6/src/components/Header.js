@@ -14,6 +14,7 @@ const Header = () => {
           <li>About Us</li>
           <li>Contact Us</li>
           <li>Home</li>
+          {console.log("Header Rendered?")}
           <LoginLogout></LoginLogout>
         </ul>
       </div>

@@ -1,131 +1,273 @@
-npx parcel index.html
+Monolith And microservice architecutre
 
-above will create a development build for us and host it to localhost 1234
+Monolith architecutre : when the web apps were developed traditionalyy  they were all developed using a monolith architecutre 
 
-npx means we are executing a npm package parcel and given a source file as index.html 
+Earlier we used to have a huge big project 
 
-for prod build the command will be 
+And if are building appplication then there are small peicex 
 
-npx parcel build index.html
+The project itself has code where APis are written . We have developed APi inside the project 
 
-instead of writing this again and again we write script then we will not use npx parcel index.html 
-we will can use diff script
-one for build
-one for prod 
+we have Ui written inside the same project 
 
-we have created a script start which will run our project in development mode and another script build for run our project in production mode
-If you are working in a company 
-If u dont know how to run the code then just go to package.json and look for script . You will get the exact command to run the code 
+We have authentication code inside the same project . We have database connectivity code inside the same project 
 
-add this in package.json 
-"scripts": {
-    "start" : "parcel index.html",
-    "build" : "parcel build index.html",
-    "test": "jest"
-  },
+This is monolith architecutre
 
+What is microservice architecutre
 
-  do run npm run start 
+we have different services for different job .
+For every services we have a differnet project and then we merge these services and this is known as seperation of concerns and single responsibility
 
-  by this the script will be called which parcel index.html 
+There are different teams which are working on individual services 
 
-  u can also do npm start but it works onlyu for start 
+How do these services interact with each other to make full application work
 
-   what is a react element 
+There is a backend service which needs to talk with auth , UI , databse , notification services
 
-  suppose in our browser i want to see a h1 tag with heading 
+All these services talk to each other 
 
-  const heading = React.createElement("h1",{id : "heading"},"Namaste Aarush");
+How these services are deloployed 
 
-   react element is a html element ? No 
+THe namaste react project that we are making is UI microservice which is written in react
 
-   but it will create an js object and when we render this element to dom it becomes HTML 
+The other advantage of microservice is u can use different tech stack for diffrent things 
 
-  for render we have to create a root inside react 
+means in monolith we have a big project a java application then u have to do everything in java but in this microservice architecutre , we can have backend written in java, ui written in react , db in python , sms services in golang 
+we can write service in any architecutre we want to 
 
-  const root = ReactDOM.createRoot(document.getElementById("root"));
+There is a question ? what language is used in a specific company 
 
-  root.render(heading);
+Companies are using multiple techstack, lagnuages for different things 
 
-  root.render will convert this object into HTML and push it to the browser . Push means it will replace actual content of div with react element 
+It depends on the use case and what tech stack us suitable to implement that 
 
-  its very complex to write react element in this way , the syntax is not good 
-
-  to help developers facebook community developed something known as JSX
-
-jsx is a js syntax to create react element 
-
-jsx is not a part of react. we can make any application without jsx also . But it makes developers life easy
-
-jsx is a convention where we marge HTML and js together. 
-
-How can we create a h1 tag using jsx 
-
-const jsxHeading = <h1>namaste react using jsx </h1>
-
-jsx is not html inside js 
-
-jsx is a html like syntax 
-
-when above piece of code is executed it becomes react element 
-
-initially we have created a h1 tag inside react but now we have create a h1 tag inside jsx
-
- const heading = React.createElement("h1",{id : "heading"},"Namaste Aarush");
+if our Ui service is deployed on 1234 port similarly every service runs on their own specific port 
+suppose on port 1234 we can have UI service 
+on port 1000 we can have Be service 
 
 
-above code is equal to below code 
+on different port we can deploy different services
+
+And all these ports can be mapped to domain name 
+
+Suppose out backend is mapped to /api
+
+suppose our domain name is namastedev.com/api 
+ so all these api are deployed to same URL 
+ for sending sms we have to call this service /sms
+
+ And we can have / route. As soon as user enter the main domain name the user hits the port 1234 which is of UI and how do these services interact. They make a call to different URL 
+
+If Ui wants to talk to backend . Ui will make a call to /api and call this differnet port 
+
+How do react application talk to different microservice outside of this world 
+
+How a react application make a backend application call and fetch the data.
+
+In the prev episode we learnt about how we can make a state variable using useState 
 
 
-const jsxHeading = <h1 id = "heading">Namaste Aarush </h1>
+In this we will learn How we will fetch data dynamically froom teh API and pupulate our page dynamically 
 
-if u will do console.log(jsxHeading) then it will also a same js object like heading 
+In this we are going to learn. How can make an APi call using react 
 
-root.render(jsxHeading);
+How web application fetch the data from the backend 
 
-This is not pure js
-js doesnot comes with jsx built inside it 
+There are two ways that can be followed 
 
-
-Your js engine doesnt understand jsx 
-
-js engine only understand ecmascript 
-
-so it will give error because browser cant understand jsx  
-
-then how this below code is executed 
-const jsxHeading = <h1 id = "heading">Namaste Aarush </h1>
+when we can make an APi call:
 
 
-parcel is doing its job behind the scenes
+(1) -> [Loads] -> API -> render
+As soon as page load we can make an API call and when we get the data(or wait for the data to come) we will render it to UI. 
 
-this code is transpiled before going to the js engine and js engine receives a code that browser can understand 
+when we open page then we dont see anything and then we get the data it renders on to the screen. 
 
-transpiled means the code is converted into a code that browser can understamd 
+(2) -> Loads -> Render -> API -> Render
 
-It is done by parcel but not alone .This responsibility is given to -> Babel is doing this 
+As soon as the page loads we will just render the UI with whatever we have. We will just render the UI or skeleton After we have quickly render now we will make an APi call as soon as the APi respond we will render the data. 
 
-babels job is to convert jsx code into react code 
+In react we will always be using the second approach 
 
-const jsxHeading = <h1 id = "heading">Namaste Aarush </h1>
+We are rendering twice. Doesn;t matter
 
-above code first jsx -> reactElement-> js object-> HTML element 
+Most important part of react. Its render cycles are very fast. React has one of the best render mechanisms 
+
+It will give a better User experience. IN react we will always do like this 
+
+=====================================
+
+useEffect hook -> we will import it as a named import in body.js in component 
+
+It takes 2 arguments first is the callback function and another is dependency array
+
+useEffect(()=>{},[]);
 
 
-older browser cant understand modern es6 so 
-bablel also convert es6 code to a code that older browser can understand 
+when this callback function will be called?
 
-babel is imp package after parcel 
+ans -> After your compoents is renderes . It will call the callback function which is passed inside dependency array 
 
-if u want to give className then u can give it is as 
 
-const jsxHeading = <h1 className = "head"> Namaste react</h1>
+Calling swiggy.com from local host has been blocked due to cors policy 
 
-className will be changed to class during rendering 
+Our browsers block us to all swiggy API from one origiin to diff origin  
 
-if u want to give attributes to jsx we use camelCase and we dont use , 
+If there is a origin mismatch browser will block the API call 
 
-If we want to write jsx in multiple lines then wrap it inside curly braces (<h1 className = "head"> 
-Namaste react
-</h1>)
+How to bypass this cors 
 
+
+we will find a cors chrome extension 
+and add it to chrome 
+
+The Api call can be differnet after some time so always use the latest APi by going on to chrome developers tools 
+
+I made an APi call to external world and get the data back 
+
+Now once we get new data now how to render our page with the new data 
+
+seEffect(() => {
+    const data = async () => {
+      const data = await fetch(
+        "https://www.swiggy.com/dapi/restaurants/list/v5?lat=30.7498676&lng=76.64110939999999&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
+      );
+      const res = await data.json();
+
+      const newdata =
+        res?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle
+          ?.restaurants;
+      setnewlist(newdata);
+    };
+    data();
+  }, []);
+
+BY this we have got the data from the backend and rendered it the live data on the frontend  
+
+is this the good way to write our code 
+
+How we can imrove the user experience. I cam show a spinning loader  until we havent show any data 
+
+or we can show a loading screen until we get the data from the bacckend 
+
+There is a concept known as shimmer UI. 
+
+Shimmer Ui resembles the page actual UI so users will understand how quickly the web or mobile app will hold even before the context has shown up  
+
+It means we load the fake page until we get the actual data from the APi 
+
+instead of showing loading we can show a skeleton we can show fake cards over here. Till the data is loaded 
+
+whenever we open any website therer are some cards that are shown on the User interface 
+
+when your application loads ,load it with shimmer UI then when the APi will receive the data then the data will be rendered  
+
+
+when the list length is zero then we are rendering shimmer and then useEffect hook is used which fetches the data and once data is responded back by the backend . the body component renders because list length is not equal to zero
+
+this is known as condition rendering 
+
+rendering on the basis of condition is known as condition rendering 
+
+Why do we even need state variables 
+
+whats the super power that these state variable have and normal js variable dont have 
+
+We will make a new feature that is login, logout button on the top of header and when we click on the button then login will change to logout and logout will change to login 
+
+If you want to change something in a component or you want to make your component dynamic. Then we have to use local state variables
+
+on Clicking on the login buttom we have to update the new state of that button 
+
+if it was a local normal variable then react dont have do anything but as it is a state variable then when ever react will see any change in the state of buttom it will render the component in which it is defined 
+
+We have done optimization that react is only re-rendering the button oon changing the state not rendering the whole header because we has pushed down the state of the buttom 
+
+WHen the header function will be re-rednred then state variable value will be initialied with something and when on Clicking the button header will be renredner and state variable is now a new varibale 
+
+the question was that state variable type is constant so then how we are able to change the value its because on every render there is a new state variable is initialzed with new value 
+
+when value is updated. It will fin the diff b/w older virtual DOm and updated virtual DOm.
+And will update the changes on to the virtual DOM . This is reconciliation algorithm 
+
+react is best in DOM manipulation because it exactly know what is changed 
+
+Now we will implement the search functionality for searching the restaurants
+
+to track the value of the input box we have to bind the state varibale with the input box 
+
+  <input
+        type="text"
+        className="search-box"
+        value={searchdata}
+        onInput={(e) => {
+          setsearchdata(e.target.value);
+        }}
+      ></input>
+      <button
+        onClick={() => {
+          console.log(searchdata);
+        }}
+      >
+        Search
+      </button>
+
+  
+  state variable value is tied to the input box , whenever something changes inside the input box we want to update my search text and update the value over here.
+
+  Whenever u change the local state variable react will rerender the component  
+
+  There is one thing that you have to notice that when u do one time top rated restaurant or search a reastaurant then it will change the main list and when u will do again saerch teh restro then it will search in the filtered list so we want that our main list should not be changed so for that we have made two state list variables and we are sending always the main list as a prop and as a setfunctio we are sending the another list function because of this out input list will always be reserved and the changes will be made in the another list 
+
+  const [newlist, setnewlist] = useState([]);
+
+  const [finalst, setfinallst] = useState(newlist);
+  
+  useEffect(() => {
+    const data = async () => {
+      const data = await fetch(
+        "https://www.swiggy.com/dapi/restaurants/list/v5?lat=30.7498676&lng=76.64110939999999&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
+      );
+      const res = await data.json();
+
+      const newdata =
+        res?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle
+          ?.restaurants;
+      setnewlist(newdata);
+      setfinallst(newdata);
+    };
+    data();
+  }, []);
+
+  return newlist.length == 0 ? (
+    <Shimmer></Shimmer>
+  ) : (
+    <div className="body">
+      <div className="search-maindiv">
+        <Search_func lst={newlist} setlst={setfinallst}></Search_func>
+        <button
+          className="top-rated-funct"
+          onClick={function () {
+            const finalist = newlist?.filter((res) => {
+              return res.info.avgRating >= 4;
+            });
+            setfinallst(finalist);
+          }}
+        >
+          Top rated restaurant
+        </button>
+      </div>
+
+      <div className="res-container">
+        {finalst?.map((res) => {
+          return (
+            <RestaurantCard key={res.info.id} resdata={res}></RestaurantCard>
+          );
+        })}
+      </div>
+    </div>
+  );
+};
+
+export default Body;

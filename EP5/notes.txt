@@ -1,131 +1,143 @@
-npx parcel index.html
+WE saw in prev lecture how API was controlling our web page 
 
-above will create a development build for us and host it to localhost 1234
+Everything react can do. You can do that with normal HTML, CSS and JavaScript.Why do we then use react ?
 
-npx means we are executing a npm package parcel and given a source file as index.html 
-
-for prod build the command will be 
-
-npx parcel build index.html
-
-instead of writing this again and again we write script then we will not use npx parcel index.html 
-we will can use diff script
-one for build
-one for prod 
-
-we have created a script start which will run our project in development mode and another script build for run our project in production mode
-If you are working in a company 
-If u dont know how to run the code then just go to package.json and look for script . You will get the exact command to run the code 
-
-add this in package.json 
-"scripts": {
-    "start" : "parcel index.html",
-    "build" : "parcel build index.html",
-    "test": "jest"
-  },
+It makes your developer experience easy 
+It make you write less code and do more on the web page
 
 
-  do run npm run start 
+react makes our code experience very fast and also optimizes something on the web page. SO that things happen very fast. 
 
-  by this the script will be called which parcel index.html 
+First we will clean our code as we have written everything on the single file before 
 
-  u can also do npm start but it works onlyu for start 
+Best practice is to make seperate file for seperate components. 
 
-   what is a react element 
-
-  suppose in our browser i want to see a h1 tag with heading 
-
-  const heading = React.createElement("h1",{id : "heading"},"Namaste Aarush");
-
-   react element is a html element ? No 
-
-   but it will create an js object and when we render this element to dom it becomes HTML 
-
-  for render we have to create a root inside react 
-
-  const root = ReactDOM.createRoot(document.getElementById("root"));
-
-  root.render(heading);
-
-  root.render will convert this object into HTML and push it to the browser . Push means it will replace actual content of div with react element 
-
-  its very complex to write react element in this way , the syntax is not good 
-
-  to help developers facebook community developed something known as JSX
-
-jsx is a js syntax to create react element 
-
-jsx is not a part of react. we can make any application without jsx also . But it makes developers life easy
-
-jsx is a convention where we marge HTML and js together. 
-
-How can we create a h1 tag using jsx 
-
-const jsxHeading = <h1>namaste react using jsx </h1>
-
-jsx is not html inside js 
-
-jsx is a html like syntax 
-
-when above piece of code is executed it becomes react element 
-
-initially we have created a h1 tag inside react but now we have create a h1 tag inside jsx
-
- const heading = React.createElement("h1",{id : "heading"},"Namaste Aarush");
+Our coded files will now be in src folder 
+so put App.js in src 
 
 
-above code is equal to below code 
+always try to give same name to file which you have given to a component 
+
+After seperating all the components. Now if you will run it will give error by saying that header is not defined so we have to import that header component to our main file where we are using 
+
+but before importing we have to export it from that file 
+
+There is 2 way we can export 
+
+using ->  normal export 
+export default Header
+
+In one file u can only have one default export . It is used generally when there is only one thing to export 
 
 
-const jsxHeading = <h1 id = "heading">Namaste Aarush </h1>
+2-> named export 
 
-if u will do console.log(jsxHeading) then it will also a same js object like heading 
-
-root.render(jsxHeading);
-
-This is not pure js
-js doesnot comes with jsx built inside it 
+If u want to export multiple things from the same file then we use named export before 
+export (nameof the thing )
 
 
-Your js engine doesnt understand jsx 
 
-js engine only understand ecmascript 
+whenever u have a hardcoded data U should never keep those things in your components file 
 
-so it will give error because browser cant understand jsx  
+so make a folder name (utils) inside src 
+and name it as constant.js and then paste it, export it from there.
 
-then how this below code is executed 
-const jsxHeading = <h1 id = "heading">Namaste Aarush </h1>
+Now we will try to make our app interactive 
+by adding functionality which is adding button for top rated Restaurant 
 
+button have attribute onClick which takes callback function as an argument 
 
-parcel is doing its job behind the scenes
-
-this code is transpiled before going to the js engine and js engine receives a code that browser can understand 
-
-transpiled means the code is converted into a code that browser can understamd 
-
-It is done by parcel but not alone .This responsibility is given to -> Babel is doing this 
-
-babels job is to convert jsx code into react code 
-
-const jsxHeading = <h1 id = "heading">Namaste Aarush </h1>
-
-above code first jsx -> reactElement-> js object-> HTML element 
+<button
+        onClick={function () {
+          
+        }}
+      >
+        Top rated restaurant
+      </button>
 
 
-older browser cant understand modern es6 so 
-bablel also convert es6 code to a code that older browser can understand 
+If u will change the list of the restaurant then also list will not be updated . But my Uid should also change then but its not?
 
-babel is imp package after parcel 
+react is fast in dom manipulation 
 
-if u want to give className then u can give it is as 
+If u want to keep your data and UI layer consistent with each other that is where react comes into picture means if the data changes my UI will automattically changes 
 
-const jsxHeading = <h1 className = "head"> Namaste react</h1>
+To do this react comes with some superpowers
 
-className will be changed to class during rendering 
+Right now our restrolist is a normal js variable but if your give list super powers
+means we will make the list as a state variable 
 
-if u want to give attributes to jsx we use camelCase and we dont use , 
+and for that we use hooks which  is known as useState 
 
-If we want to write jsx in multiple lines then wrap it inside curly braces (<h1 className = "head"> 
-Namaste react
-</h1>)
+react hook is a normal js function which is given to us by react but that function has some super power that has some logic written inside it . Which gives us some utilities 
 
+1-> useState()
+2-> useEffect()
+
+And we import this from react as a named import 
+
+whenever we will say react hook we are talking about utility function. 
+
+
+useState is used to create a state variable 
+why it is called as state variable?
+because it maintains the state of the application 
+
+whenever a state variable updates react will rerenders the component.
+
+react will remove the body and push the updated body quickly
+
+What makes a large application super fast . React will make these dom operations super fast and efficient 
+
+react is only good at DOM operation 
+
+It keeps your data layer in sync with UI layer
+
+
+react uses Reconciliation Algoirthm 
+is also known as react fiber 
+
+We have a res-container and we have 15 restro card 
+My UI chnages to filter these 15 cards to 5 cards 
+
+when we have 15 cards UI React creates a virtual DOM for it. 
+
+Actual Dom contains the tags like <Div> <div> u
+div ke under div
+
+virutal DOM is the representation of the actual DOM means
+
+if u will console.log(any component) then this will print a object . And this object is a virtual DOM 
+
+same with react element 
+it gives object and this object is a virtual DOm 
+
+Diff algo : Finds out the DIff b/w the updated virtual DOM and prev Vrital DOM and will then actualy calculate the diff. And then update the DOM 
+
+means 15 cards to 3 cards 
+
+In react 16 a new algorithm to update the DOM came out known as react fiber. Finds out the diff and update the DOM. 
+
+Finding out the diff between the two HTML code is tough then 
+Finding out the diff between the two object
+
+React keeps a track of all the virtual DOM(object representation of actual DOM) 
+
+means when i will click on the button then new object of actual DOM will be created and then react will calculate the diff b/w two virtal DOM and updating the DOM  
+
+thats why react is most popular in the  makred 
+
+react is fast because it is doing the efficinet DOM manipulation
+
+everythime my state variable changes react will find the diff and updaet the dOM .
+
+react is keeping an eye on this state variable 
+
+There is a second argumnet when we use useState
+because there should be some trigger to start the reconciliation algorithm 
+
+You can also write usestate like this 
+
+const arr = useState(list);
+
+const [newlist,setnewlist] = arr;
