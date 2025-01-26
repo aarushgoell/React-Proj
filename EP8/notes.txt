@@ -1,0 +1,360 @@
+In this lecture we will learn about class based components 
+
+class based components is an older way of creating components inside react 
+
+In the 7 episode i have taught    functional components. ITs a new way of writing code 
+
+
+In about us page we will make class based components
+
+In companies website you have seen the about us page where in the about section there they will the information about the team members from github 
+
+will fetch the information from github APi and will show the tempbers here
+
+I will show the card for each team member 
+
+We will write the same thing in functional component way and then will tell you how to show the relation b/w the 
+
+What if I want to convert this user component into class based component  
+
+We will write a file name UserClass.js component. 
+
+
+What is class based component ? 
+Ans It is a normal javascript class 
+
+class UserClass extends React.Component{
+  
+}
+
+This is the way for react to tell that this is a class based components so now react will start tracking it 
+
+
+Now i will have a render method inside over here and this render method return a piece of jsx which will be displayed over UI 
+
+is a class which has render method which return some piece of jsx. 
+
+The only method b/w the two is is we have render method in class based Component which return jsx 
+
+React.component is a class which is given to use by react and UserClass is inheriting some features from it 
+
+
+import User from "./User";
+import UserClass from "./UserClass";
+
+export const About = () => {
+  return (
+    <div>
+      <h1>About</h1>
+      <h2>This is Namaste React Web Series</h2>
+      <User></User>
+      <UserClass></UserClass>
+    </div>
+  );
+};
+
+export default About;
+
+In about us component there is simple way to pass props in a functional component like this :
+
+import User from "./User";
+import UserClass from "./UserClass";
+
+export const About = () => {
+  return (
+    <div>
+      <h1>About</h1>
+      <h2>This is Namaste React Web Series</h2>
+      <User name = {"AarushGoel"}></User>
+      <UserClass></UserClass>
+    </div>
+  );
+};
+
+And then in user functional component i can simply recieve it 
+
+But in class based component if i want to pass props then how i can i recieve that 
+
+I will be having a constructor which will recieve those props 
+
+
+import React from "react";
+
+class UserClass extends React.Component {
+
+  constructor(props){
+    super(props);
+
+    console.log(props);
+  }
+
+
+  render() {
+    return (
+      <div className="user-card">
+        <h2>Name : Akshay</h2>
+        <h3>Location: Dehradun</h3>
+        <h4>Contact: aarush</h4>
+      </div>
+    );
+  }
+}
+
+We have to use super(props) because then it will not throw an error 
+
+By using the super constructor with a props argument, the component is able to inherit the properties of the parent component and also access the new props that have been passed in. This allows the component to make use of the properties of both the parent component and the new props in its render method.
+
+For accessing it we have to use {this.props.name}
+
+
+We always have to use a this keyword  inside your class so that this prop can be accessed anywhere inside my class
+
+
+Now we will learn how we can create state or local variables inside my class based components and updates the UI when the state changes 
+
+
+Earlier there is no need to be no hooks inside functional components  
+There is old way of creating states 
+
+state was created whenever a class instance were created 
+
+
+Rendering a functional component? 
+
+What does this mean on your web page if there is a functional component. It loads. We are mounting that function component or calling that function component
+
+invoking a functional comp means we are loading or mounting that functional comp on web page 
+
+loading a class based comp on web page means we are creating an instance of the class , the constructor is called and this is the best place to receive props and this is the best place to create state variables 
+
+
+this.state = {
+
+}
+
+is a big whole object which contains all state variables 
+
+In function component behind the scenes react uses a big object to keep the state like we do in class based comp 
+
+
+constructor(props) {
+    super(props);
+
+    this.state = {
+      count: 0,
+      count2: 2,
+    };
+  }
+
+  This is how we can craete multiple state variable inside class based components
+
+  Now we will learn how we can update the state variables 
+
+
+
+In functional Components ,its very simple just add one more argument while initializing state variable ,which is a function which is used to update the value 
+
+In class based Components
+
+Never update state variables directly 
+
+react gives access to an important function which is this.setState({})
+
+which contains an object which contains the updated value of the state variables 
+
+Loading the component means mounting the component on the web page 
+
+whenever this web component renedered on to the web page or mounted 
+
+It starts rendering this jsx 
+
+Then it will see class based component Then it will start loading, new instance will be created, constructor will be called and then jsx will start executing 
+
+Now we have conveted about to class based component
+
+If we notice how the parent and child component is loaded then it happens like this 
+
+parent construcore-> parent render-> child construcore -> child render 
+
+
+class based component have important method which is known as componentDidMount
+
+This is another method which react class based components gives to us 
+componentDidMount()
+
+when constructor is called and done and when render method is done 
+
+then componentDidMount() is called 
+
+
+so now if we start 
+
+parentConstructure
+About.js:16 parent Render
+UserClass.js:6 child construcror
+UserClass.js:19 child render
+UserClass.js:15 child Mount
+About.js:12 Parent Mount
+
+componentDidMount is used to make API call 
+
+
+But why?
+
+We want first our component should  be rendered then make an APi call ,the data that is fetched from APi call will be rendered
+
+What if we have multiple children. inside class based component 
+
+Then the flow will be like this 
+
+parentConstructure
+About.js:16 parent Render
+UserClass.js:6 Aarush Goel by classed basedchild construcror
+UserClass.js:19 Aarush Goel by classed basedchild render
+UserClass.js:6 Aarush Goel 2nd child by classed basedchild construcror
+UserClass.js:19 Aarush Goel 2nd child by classed basedchild render
+UserClass.js:15 Aarush Goel by classed based : child Mount
+UserClass.js:15 Aarush Goel 2nd child by classed based : child Mount
+About.js:12 Parent Mount
+
+mounting refers to the process of creating a component and inserting it into the DOM for the first time. When a component is mounted, it means that it has been initialized, rendered, and added to the screen (the browser’s DOM). It's essentially the phase in the component's lifecycle when the component "comes to life."
+
+This happens when a component is created and attached to the page, allowing it to begin displaying content and interact with the user.
+
+This is the order how the life cycle method works 
+
+react is optimizing 
+
+
+
+React is fast because it has two phases 
+
+One us render phase and another is Commit phase 
+
+WHen the component is mounted first constructor is called , then render,then react updates the DOM , then componentDId Mount is called 
+
+Now i will do the changes in my About. js and UserClass.js
+
+Right now this is the About. js file and this is the UserClass.js file
+
+import React from "react";
+
+class UserClass extends React.Component {
+  constructor(props) {
+    super(props);
+    console.log(this.props.name + "child construcror");
+
+    this.state = {
+      count: 0,
+      count2: 2,
+    };
+  }
+
+  componentDidMount() {
+    console.log(this.props.name + " : child Mount");
+  }
+
+  render() {
+    console.log(this.props.name + "child render");
+    const { name, location } = this.props;
+
+    const { count, count2 } = this.state;
+
+    return (
+      <div className="user-card">
+        <h1>Count : {count}</h1>
+        <button
+          onClick={() => {
+            this.setState({
+              count: this.state.count + 1,
+              count2: this.state.count2 + 1,
+            });
+          }}
+        >
+          IncreaseCount
+        </button>
+        <h1>Count2 : {count2}</h1>
+        <h2>Name : {name}</h2>
+        <h3>Location: {location}</h3>
+        <h4>Contact: aarush</h4>
+      </div>
+    );
+  }
+}
+
+export default UserClass;
+
+
+import UserClass from "./UserClass";
+
+import React from "react";
+
+class About extends React.Component {
+  constructor(props) {
+    console.log("parentConstructure");
+    super(props);
+  }
+
+  componentDidMount() {
+    console.log("Parent Mount");
+  }
+
+  render() {
+    console.log("parent Render");
+
+    return (
+      <div>
+        <h1>About</h1>
+        <h2>This is Namaste React Web Series</h2>
+        <UserClass
+          name={"Aarush Goel by classed based"}
+          location={"Himachal"}
+        ></UserClass>
+        <UserClass
+          name={"Aarush Goel 2nd child by classed based"}
+          location={"dehradun"}
+        ></UserClass>
+      </div>
+    );
+  }
+}
+
+export default About;
+
+
+Used "https://api.github.com/users/aarushgoell"
+
+To fetch data of github profile of users 
+
+Now once we get the data we will create the state variables
+
+
+Mounting life cycle-----------------
+
+//Constructor is called with dummy data 
+// Render the component with dummy data 
+// Updated the DOM
+// componentDidMount is called <API call> <>
+  -<this.setState>-> state variable is updated 
+
+setstate triggers the reconciliation cycles and updates cycle 
+
+----Update cycle  
+
+   render(API data) with the new data 
+   <HTML ( new API data )
+
+  componentDIdUpdate is called 
+
+
+
+First Mounting cycle happens and then the update cycle happens 
+
+There is 3 step -> unmounting -> means remove component from the UI 
+
+componentWillUnmount(){
+
+}
+
+when will this method will be called when you will move to the next page 
+It means the the component is removed from the UI then componentWillUnmount will be called 
