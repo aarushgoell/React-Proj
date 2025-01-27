@@ -1,0 +1,180 @@
+// In this episode how we can write code in a better way and how we can optimize our app. How we can make our app performant. How we can make our app lighhtweight. So that it loads on the web page very fast.
+
+Is our code very clean ?
+
+In this we will learn about Custom Hooks:
+
+Single responsibilty principle:
+
+Each of the function or component should have single responsibilty
+
+Only single responsibilty of restro meny should be displaying restro menu
+
+Single responsibilty of restro card should be displaying restro card 
+
+same like header 
+
+so like this each component in our app 
+should have single responsibilty 
+
+If your are doing multiple things in same component then you should break it down to single component
+
+Modularity means you break your code into different-2 modules so that your code becomes more maintainable 
+
+Suppose your code have single unit 
+
+If we break the code into different component then we can each test each component whether it is working fine or not for our test cases 
+
+And it also makes it maintainable 
+
+Where in my app i need to show my restrocard 
+
+Our code becomes testable, reusable and maintainable  
+
+Hooks are just normal js function or utility function which are given to us by react
+
+BUt today we are goind to create our own hooks 
+
+We will take out some responsibilty from the component and extract it inside a hook so that oour component becomes more modular and becomes more readeable 
+
+Creating a Custom hook is not a mandatory thing 
+
+If we noteice the responsibilty of restro menu 
+
+first is fetching the data and second is displaying the UI 
+
+We are going to create our own cutom hook that is going to fetch the data and give it to Restaurant Menu 
+
+How to get the data , RestroMenu is not concerned about that 
+
+We will create our hooks inside UTILS 
+
+If the function is starting from the small letter use that means its a hook 
+
+see this is the hook that we have created for fetching the menu of each restro according to resID which we are taking from the parent comp 
+
+import { useEffect, useState } from "react";
+import { leftHalfMenu } from "./constants";
+
+const useRestroMenu = (resId) => {
+  const [resInfo, setResInfo] = useState([]);
+
+  useEffect(() => {
+    menuData();
+  }, []);
+
+  const menuData = async () => {
+    const jdata = await fetch(leftHalfMenu + resId);
+    const realdata = await jdata.json();
+
+    setResInfo(realdata);
+  };
+
+  return resInfo;
+};
+
+export default useRestroMenu;
+
+
+
+we will make a feature to tell whether the user is active or inactive , internet connection is active or inactive 
+
+
+For making your own custom hook we should know what can be the input and what should be the output
+
+
+We will be using event listener which will keep a track of whether the user is online or offline 
+
+which is given to us by window object 
+
+
+Its not mandatory to name the hooks with the starting word use but its recommened as we get to know that its a hook and our projects are designed in such a way that they will give error if u can see naming the component always starts with Capital letter. 
+
+Now we will get to know that how we will optimize our app even more 
+
+whenever we develop a large scale big application which have thousands of components. THe performance of those applications are not good 
+
+we learnt about parcel in second lecture 
+
+parcel is a bundler:
+
+One imp objective of our bundler is to bundle our application. it takes all your file and make it into one. 
+
+If you will see in dist file . then bundler will bundle all these file and bundle one js file 
+
+Right now we are running our app in dev build so it is not minified yet
+
+If we will run this in prod build then it will be compressed, minified 
+
+go to developers console-> network->JS 
+
+u will see there is one js file 
+
+All the things in your web page is happening through one js file 
+
+Is it good to have one js file? 
+
+If we will make one js file for thousands of components 
+
+the problem is the size of js file will increase alot 
+
+js file increase by how many component it holds 
+If we have thousands of components we dont need thousands of component loading into our web page.
+
+We can make a bundle of components just for diff functionality 
+
+I can make bundle for diff packages
+
+We can logically split of our website into smaller bundles 
+
+swiggy has food delivery and grossery delivery 
+
+Suppose our app has grocery delivery vertical and those have their 10 components.  
+
+We will make diff bundle for groceries and diff bundle for menu 
+This bundle contains all the components for our application
+
+grocery app can have alot of components inside your app. We can think of it as mini application inside your app 
+
+I want to distribute my application that my grocery and the components of grocery comes from a different bundle
+
+I will import my grocery through lazy loading 
+
+but why?
+
+When our app will load initially. Our app home page will load. It will not load the code for grocery 
+
+  
+Only when i will go to grocery page then Only grocery code will load into our app.
+
+
+initially our code doesnt have grocery code when iw ill go to that link then only my grocery code should come up. 
+
+we will not load everything directly
+but we will do lazy loading  when required 
+
+
+It is also called as on demand loading 
+
+when the user goes to that particular page then only loads that page.
+
+
+const Grocery = lazy();
+
+lazy is a function which is given to us by react.
+
+
+Now we will lazy load it. Now this lazy takes a callback function inside which we import , import is not import that we  write at the top. It is the function inside which we write the path of the grocery(component)
+
+
+const Grocery = lazy(()=> import("./components/Grocery"));
+
+
+If u will notice -> clicking on grocery page and go to developers console ,js file then u will see there a new js file over here. We basically splitted our component into different bundles 
+
+
+Now grocery has its own bundle and our main bundle is seperate 
+
+If youw ill got dist folder then u will see a new file named Grocery.js
+
+But if u will click on grocery then u will get error 
