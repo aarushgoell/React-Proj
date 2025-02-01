@@ -177,4 +177,42 @@ Now grocery has its own bundle and our main bundle is seperate
 
 If youw ill got dist folder then u will see a new file named Grocery.js
 
-But if u will click on grocery then u will get error 
+But if u will click on grocery then u will get error because this grocery code takes 12 ms to come to browser 
+
+grocerycode takes sometime to fetch the data of grocery at that particular time react tries to render grocery but it is not there. That causes that error.
+
+How to handle that. We have to use suspense component that comes from the react library 
+
+Now we can wrap our comp into the suspense comp 
+
+We have to give it a fallback or placehodler to what should react should render then the code is not avaialble . And inside it we can return jsx or any component like shimmer or tag 
+
+When i will click on grocery then only my grocery code will be loaded 
+
+import React, { lazy, Suspense } from "react";
+
+{
+        path: "/grocery",
+        element: (
+          <Suspense fallback={<h1>Hello the page is loading</h1>}>
+            <Grocery />,
+          </Suspense>
+        ),
+      },
+
+
+These 4 lines of code can make your application very fast,optimized 
+If your interview ask you to mkake e commerce webstie . So then i can lazy load my website to break the website into different chunks 
+
+To reduce the bundle size we do this
+
+ code splitting
+ chunking 
+ dynamic bundling
+ lazy laoding 
+ on demand loading
+ dynamix import on demand 
+
+ all these have same meaning 
+
+ When uou do dynamic loading all the code doesnot come at once and it will only come when it will be requested 

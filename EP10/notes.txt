@@ -1,0 +1,147 @@
+In this we will learn how to add styles to our application   
+
+To add styles in our app one way is 
+Sass -> Synatically awesome style sheets 
+
+Writing css with some super powers. Writing css becomes litter more advanced and litter more easy 
+
+
+There is other way to write css in industry and that is known as style components
+
+styled-components
+
+
+There are other ways: 
+
+react component library 
+
+matrial UI  
+bootstrap 
+chakra UI 
+
+Alot of big companies use different libraries and frameworks. These are CSS libraries and frameworks that have component that are already beautiful like we have prebuilt button in which there is styling done already 
+
+
+We will learn about tailwind CSS which is a CSS frameworks. IT works with other frameworks as well 
+
+postcss -> a tool for transforming css with JavaScript
+
+write > npm install tailwindcss @tailwindcss/postcss  
+above will be used to install tailwind with only specefic bundler which is parcel 
+
+when we will do npx tailwind init it will create a tailwind.config.js for us 
+This is the condig file for tailwind css 
+
+We have to configure both postcssrc and tailwind.config.js 
+
+postcss is a way through which parcel will understand tailwind
+
+css disadvantage : The code becomes look very ugly and there is a inital learning 
+advantage: U can apply css in same jsx file we dont need to go anywhere 
+
+It is very lighhtweight as when parcel will make the bundle of css. It will only include the css that is required on our web page 
+
+
+====================================
+
+For here we will start learning Episode 11- Data is the new oil 
+
+We will learn how to manage data in your application
+
+First Concet: Higher order Components
+
+Higher order components is a function that takes a component inside and returns a component 
+
+takes a components as an input and then it enhances that component, add some features to that component and returns it back 
+
+We will make a higher order component that will take a existing card and will return a card in which promoted will be written on it (The res will be promoted if the rating of it will be higher than 4.3)
+
+
+
+I have modified RestaurantCard.js
+
+// import React from "react";
+
+import { RES_IMG } from "../utils/constants";
+
+const RestaurantCard = (props) => {
+  const { cloudinaryImageId, name, cuisines, avgRating, sla } =
+    props?.resdata?.info;
+
+  return (
+    <div className="res-card p-4 w-[250px] bg-gray-200  m-4 rounded-xl hover:bg-gray-300">
+      <img
+        className="h-[200px] w-[100%] rounded-lg"
+        src={RES_IMG + cloudinaryImageId}
+      />
+      <h3 className="font-bold py-3">{name}</h3>
+      <h4>{cuisines.join(", ")}</h4>
+      <h4>{avgRating}</h4>
+      <h5>{sla.deliveryTime}</h5>
+    </div>
+  );
+};
+
+export const CardwithLabel = (RestaurantCard) => {
+  return (props) => {
+    return (
+      <div>
+        <label className="absolute bg-black text-white px-2 rounded -lg m-2">
+          Promoted
+        </label>
+        <RestaurantCard {...props}></RestaurantCard>
+      </div>
+    );
+  };
+};
+
+export default RestaurantCard;
+
+
+
+And now in the body.js
+
+this editing we have done 
+
+ return (
+            <Link key={res.info.id} to={"/restro/" + res.info.id}>
+              {res.info.avgRating > 4.3 ? (
+                <LabeledCard resdata={res} />
+              ) : (
+                <RestaurantCard resdata={res}></RestaurantCard>
+              )}
+            </Link>
+          );
+        })}
+
+
+======================================
+
+Now we will learn what is controlled and unControlled components
+and will learn how to life the state up  
+
+An important part of react application is to manage its data 
+UI doesn't have its logic of its own. You give some jsx and it is just be on that page . Ui is different part and data is diff part inside react application
+
+
+All the react application have two layers:
+
+One is UI layer 
+Another one is the data layer 
+
+And this UI layer is powered by data layer 
+
+This data layer consists of your props ,states , your local variables. Whatever data in your application is the data layer 
+
+If you know how to manage data in your application. Then your application will be super fast 
+
+IN this episode we will learn how to manage data properly in our application
+
+
+We will be filtering out all the item category 
+
+For each cateogry we will build an Accordian item:
+
+
+
+
