@@ -142,6 +142,230 @@ We will be filtering out all the item category
 
 For each cateogry we will build an Accordian item:
 
+When we will click on the header it should hide and show 
 
+Now we want that the other accordians should automattically close when i open other accordian 
+
+U should install react developers tools
+
+In profile in developers console in flamegraph whatever u do inside your react app it will record it 
+
+
+All the restaurant category are maintaining their own states 
+
+Because the power of collapse is here in the restaurant category
+
+The recommended component is controling the item list and another category is not aware about what is happening in the recommended component
+
+I want another category state to life it up 
+
+I dont want to give power of show and collapse item list to this recommanded
+
+Right now Restaurantcategory have the power to show and collapse item list 
+
+I want to give this power to restaurant menu 
+
+Right now each of the restaurant cateogry is controlling itself. I want 
+
+Restaurant Menu to control all the restro 
+
+I will pass boolean value showItems to Restaurantcategory if that showitems is true then there items list will be shown other wise not and this control will be given parent restaurant menu 
+
+Controlled and unControlled Components 
+
+
+Now Restaurantcategory is a controlled component as this is controlled by restromenu component 
+
+WHen it was having its own state , then restro menu doesnt have the control of Restaurantcategory
+
+If the Restaurantcategory was controlling itself, it would have been a unControlled comp  
+
+If i take away this power of controlling the state on their own 
+then it is relying on its parent for controlling its state 
+
+can i modify the state variables of my parent from my children 
+
+We are lifting the state upp 
+
+HOMEWORK: Build slide up functionaly of restaurant category. IT is pending 
+
+
+We will learn about prop drilling 
+
+In real world react application there are alots of components. They have a different hierarchy . Components inside component , alot of components nested inside it. Passing data from one component to another component is a very big challenge. React has one way data flow. 
+
+In react data is passed from parents to children,
+their children to their children 
+
+similiary data flow in one direction from top to bottom 
+
+we have restro menu page , so this restro menu page passed data to restrocategory and this restrocategory pass data to restrolist 
+
+If i have dummy data inside restromenu and i want to access that data inside my item list 
+
+I cant directly acess that dummy data. I have to pass it via intermediate parent.
+
+But if there are many components and there is 8,9 levels of nesting. So the data have to be passed through every component that comes on to the path from source to destination and the component have nothing to do with that dummy data 
+
+This concept is known as prop drilling 
+There is a problem with prop drilling . If there are only 2,3 level then its okay but not okay for more levels '
+
+But if my data is present somewhere and i want to access that data 
+
+IN a large application there is a scenaria where we have some kind of global data that i can access from anywhere doens'not maatter where i am 
+
+For that react gives a super power and that super power is known as react context.
+
+We use context which is like a global place where your data is kept and anybody can access it and that is known as react context 
+
+Lets us understand how we can make our data layer more powerful with this react context 
+
+There can be some data that is needed in every page. For ex:
+
+logged in user 
+Theme 
+
+There is some data that we need anywhere in our app. For that data we hold it inside a context and that context can be used anywhere in our app.
+
+lets create a context inside utils and lets call this as userContext that will kept the information of the logged in user 
+
+
+React gives us access to a imp uitlity function that is createContext to create user context 
+
+import { createContext } from "react";
+
+const UserContext = createContext({
+
+      loggedInUser : "Default User"
+})
+
+export default UserContext;
+
+
+Now if we want to access this data in other component lets say in header
+
+For accessing that information react gives us hook   -> userContext
+
+I can get the context data anywhere in my app  , 
+
+storing the data in a globalobject we can say to remember but dont tell in interview 
+
+Should we keep all the data inside context 
+
+If we will keep all the data inside conetext then we dont need props 
+but thats not the case 
+
+
+
+only the data which you are using at
+ multiple places only that is usied inside context 
+
+ But the thing is u can access it anywhere we want to 
+
+ will this context will availbe in about us page also 
+
+ But about us page is made up of class based component so technique willbe differnet 
+
+ first import the user context 
+
+ and then in render () if you want to use it 
+
+ There are two ways to access that context. One way is using a hook
+
+ 2) -> like this 
+
+ <div>
+        LoggestInUser :
+         <UserContext.Consumer>
+          {(data)=>{
+            return <h1 className="font-bold text-2xl">{data.loggedInUser}</h1>
+          }}
+        </UserContext.Consumer>
+        </div>
+
+    
+
+What if i dont want to use the default value of user , what if i logge in as a user if i have authenticated code written 
+so how to modify this contxt if logging in , 
+
+
+Making a APi call to check whether the user if logged in or not 
+
+we will import UserContext in root file 
+
+UserContext.provider . I am orverride an old value with the  new value 
+
+we will wrap our whole proej with UserContext.provider and inside it pass it as a prop name value = {{
+  loggedInUser : userName
+}}
+
+
+const AppLayout = () => {
+  const [userName, setUserName] = useState("DefaultUser");
+
+  useEffect(() => {
+    // made a fetch call and send the username and password
+
+    const data = {
+      name: "Aarush Goel",
+    };
+
+    setUserName(data.name);
+  }, []);
+
+  return (
+    <UserContext.Provider
+      value={{
+        loggedInUser: userName,
+      }}
+    >
+      <div className="app">
+        <Header></Header>
+        <Outlet />
+      </div>
+    </UserContext.Provider>
+  );
+};
+
+
+if i am wrapping context provider only in Header then the new value will only be inside header not in other components
+
+all the other value will be default value 
+
+If i use my provider for a specefic context i can use that too 
+
+Context is the global space i can provide to whole app or just the small portion of our app 
+I can create multiple context 
+I can create new context for header
+And i can override anywhere we wantto  
+
+which makes it performant 
+
+
+It depends on where you have provided your userContext 
+
+  return (
+    <UserContext.Provider
+      value={{
+        loggedInUser: userName,
+      }}
+    >
+      <div className="app">
+      <UserContext.Provider value={{
+        loggedInUser : "Elon Musk"
+      }}>
+        <Header></Header>
+      </UserContext.Provider>
+        <Outlet />
+      </div>
+    </UserContext.Provider>
+  );
+};
+
+in the above code the name for header will be elon musk and for the rest of the app it will be userName , and if user is not authenticated then the name will be default 
+
+Lets create an input box and try to modify our username with input box 
+
+It will also uppdate about us page and even during initial render only home page was loaded not the about us page due to lazy loading 
 
 

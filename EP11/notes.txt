@@ -1,0 +1,132 @@
+In this episode we are going to see how we can create our own redux store 
+
+we are going to see how we can manage state (data) of our application using redux 
+
+In our react application , there is data layer and UI layer 
+
+Redux works in the data layer of our application 
+
+UI and the data layer works in  sync and builds our own react app 
+
+Redux is not mandatory 
+
+whenever we are building a small or mid size application we dont need redux. But if you are building a large size application where the data is heavly used. There is alot of read and write operations happening in your react application
+
+There is alot of component and alot of data is transferred. The application is grown huge . Using redux makes sense 
+
+
+If you are building a small app with few components. We dont need redux. All the application which are build using redux can be build without redux also. 
+
+Redux is not mandatory and use it only when required 
+
+Redux and React are different libraries 
+
+Redux is diff library which we install in our project 
+
+Redux is not the only lib which is used for managing state of our application
+
+zustand,
+
+Benefits of using redux:
+
+
+when you are using large scale application, redux offers you a great solution for it, handling  data and managing your store 
+
+
+2)-> our application becomes easier to debug ( redux offers easy debugging)
+
+just like we have react dev tools we also have redux dev tools with us 
+
+Redux offers state management. It doesnt need to be a react application itself. It works with other libraries and frameworks as well 
+
+React-Redux is a great combination 
+
+There are two libraries that redux team offers:
+
+-> React-Redux is a lib which is kind of a bridge between react and redux 
+
+so we will be using react-redux library today in our application and other library that we will be using is 
+
+
+-> Redux Toolkit
+
+Why we have these libraries, in older days we used to have a different way of writing redux. 
+
+Now with the modern web dev is coming up. So redux has simplified itself alot
+
+
+edux Toolkit & React-Redux (Explained Simply)
+Why Redux Toolkit?
+Redux Toolkit (RTK) was created to simplify using Redux. Before RTK, setting up Redux was:
+❌ Too complicated – You had to manually configure the store.
+❌ Required too many packages – Middleware, actions, reducers, etc.
+❌ Too much boilerplate – A lot of repetitive code for simple tasks.
+ 
+RTK solves these by automating common setups and making Redux code shorter and cleaner.
+
+What is Redux Toolkit?
+Think of Redux Toolkit as a helper tool that makes Redux easy to use. It provides:
+✅ Easy store setup – No need for manual configuration.
+✅ Auto-generated reducers & actions – Less code to write.
+✅ Built-in async handling – No need to write extra API logic.
+
+Why Use Redux Toolkit?
+✅ Less code – No need to manually write action creators and reducers.
+✅ Easy API calls – RTK Query handles fetching & caching.
+✅ Better performance – Optimized store updates.
+
+================================
+
+Now in this episode we will make our cart , when we will click on any restaurant that item will be added in the cart 
+
+to store all the cart information we will be using redux-store 
+
+
+Redux store is nothing but a big object and it is kept at a centeral global space and any component can access it inside my app . It can write, read data from the store 
+
+We keep the most of the major data into this redux store
+
+In the one big whole state object , is it good to keep all the data inside it . Yes its fine 
+
+so that redux store doesnt become very big, we have slices in our redux store 
+
+slice can be assumend to be a small portion of our redux store 
+
+Why do we need slices 
+
+
+To keep data seperate we make logical partitions  
+
+If we want to store card data in redux store then we will make differnt slice for our card data 
+
+Suppose if we want to keep loggedInUser info in redux store so then we will make a user slice 
+
+There will be different type of slices, whatever you want to do there will be a slice for it 
+
+we will be making cart slice which is storing all the info of cart . initially the cart can be an empty array, but as we 
+put data inside it can modify the cart slice
+
+when we will click on the add button then how will the data will go inside this cart slice. U cant direcly modify your cart slice 
+
+There is a way, u can do that . WHen i will click on add button it will dispatches an action
+
+that action will  calls a function and that function will updates the slice of redux store . Now the cart slice will be modified. 
+
+What is this function -> Known as the reducer 
+
+Now we have seen how to write data using dispatch ,reducer,but that change if i to make visible in Ui as well. so how to read data 
+
+for that we use ------ selector----- to read the data from the store and this selector will modify our react component
+selector will give you data over the component
+
+when we use selector then this phenomena is known as subscribing to the store 
+then header comp(cart combp) is subscribed to the store using selector ,subscribe means it is in sync with the store. so the cart will automcally be updated  
+
+If the data inside my store changes my cart comp will be updated automattically
+
+[Add](click) ----------> [A]dispatch (action) -------> [fn()](reducer)-----------------------------------------> store(slice)
+                                              |
+                                              |
+[cart comp] ---------> [selector](subscribed)--
+
+

@@ -1,0 +1,109 @@
+1. What is Prop Drilling?
+Prop drilling is when you pass data (props) from a parent component down multiple levels of child components, even if intermediate components don’t need the data. This can make code harder to maintain.
+
+Example:
+
+jsx
+Copy
+Edit
+const App = () => {
+  const user = "Vinay";
+  return <Parent user={user} />;
+};
+
+const Parent = ({ user }) => {
+  return <Child user={user} />;
+};
+
+const Child = ({ user }) => {
+  return <GrandChild user={user} />;
+};
+
+const GrandChild = ({ user }) => {
+  return <h1>Hello, {user}</h1>;
+};
+Here, user is passed through multiple components, even though only GrandChild needs it.
+
+2. What is Lifting the State Up?
+Lifting the state up means moving the state to a common ancestor component so that multiple child components can share and modify it.
+
+Example:
+
+jsx
+Copy
+Edit
+const App = () => {
+  const [count, setCount] = React.useState(0);
+  return <Counter count={count} setCount={setCount} />;
+};
+
+const Counter = ({ count, setCount }) => {
+  return (
+    <div>
+      <Display count={count} />
+      <Button setCount={setCount} />
+    </div>
+  );
+};
+
+const Display = ({ count }) => <h1>Count: {count}</h1>;
+
+const Button = ({ setCount }) => (
+  <button onClick={() => setCount(prev => prev + 1)}>Increment</button>
+);
+Here, count is stored in App, and Display & Button use it via props.
+
+3. What are Context Provider and Context Consumer?
+Context Provider: The component that provides a value to the context.
+Context Consumer: The component that consumes (reads) the value from the context.
+Example Using Context API:
+
+jsx
+Copy
+Edit
+const UserContext = React.createContext(); // Create context
+
+const App = () => {
+  return (
+    <UserContext.Provider value="Vinay">
+      <Parent />
+    </UserContext.Provider>
+  );
+};
+
+const Parent = () => <Child />;
+
+const Child = () => <GrandChild />;
+
+const GrandChild = () => {
+  return (
+    <UserContext.Consumer>
+      {(user) => <h1>Hello, {user}</h1>}
+    </UserContext.Consumer>
+  );
+};
+Here, UserContext.Provider passes "Vinay" down the component tree, and UserContext.Consumer reads it.
+
+4. If You Don't Pass a Value to the Provider, Does It Take the Default Value?
+Yes, if you don’t pass a value, the context will take the default value set during creation.
+
+Example:
+
+jsx
+Copy
+Edit
+const UserContext = React.createContext("Default User");
+
+const App = () => {
+  return (
+    <UserContext.Provider>
+      <GrandChild />
+    </UserContext.Provider>
+  );
+};
+
+const GrandChild = () => {
+  const user = React.useContext(UserContext);
+  return <h1>Hello, {user}</h1>;
+};
+Since no value is provided, user will be "Default User".

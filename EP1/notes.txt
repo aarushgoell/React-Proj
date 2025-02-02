@@ -23,7 +23,9 @@ This is the basic way to write hello world on a web page
 
 what are these document.createElement ? or getElementById
 
+
 These are the API which browser already has. browser has js engine which is used to execute js 
+
 
 Does the browser know what is react ? ->No
 
@@ -44,8 +46,8 @@ cdn(content delivery network)-> this is the website where react library has been
           Online Development Environments: Tools like GitHub Codespaces for coding directly online.
           Hosting impacts performance, scalability, and accessibility.
         
-    
-            A library in programming is a collection of pre-written code, functions, or routines that developers can use to perform common tasks without writing the code from scratch. Libraries help save time and effort by providing reusable components.
+        
+        A library in programming is a collection of pre-written code, functions, or routines that developers can use to perform common tasks without writing the code from scratch. Libraries help save time and effort by providing reusable components.
 
  
  
